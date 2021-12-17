@@ -16,7 +16,7 @@ bool Init()
         return false;
     }
 
-    window = SDL_CreateWindow("WindowName",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,640,480,SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("コロナ包囲網",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,640,480,SDL_WINDOW_SHOWN);
     
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     
@@ -33,7 +33,8 @@ class Sprite
     int px, py, w, h;
     
 public:
-    Sprite(int x, int y, string imageName){
+    Sprite(int x, int y, string imageName)
+    {
         // 画像ファイを読み込む
         string path = "Images/" + imageName + ".bmp";
         SDL_Surface* image = SDL_LoadBMP(path.c_str());
@@ -49,41 +50,87 @@ public:
         px = x ; py = y;
     }
 
-    ~Sprite(){
+    ~Sprite()
+    {
         SDL_DestroyTexture(texture);
     }
     
-    void redraw(){
+    void Redraw()
+    {
         SDL_Rect imageRect={0,0,w,h};
         SDL_Rect drawRect={px,py,w,h};
         SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
     }
     
-    void forward(int d){
-        px = px + d;
+    void Forward(int d)
+    {
+        px += d;
     }
     
+    void Up(int d)
+    {
+        // yのプラス方向は下なので-の値を足している
+        py -= d;
+    }
 };
 
-int main(int argc, const char * argv[]) {
-    
+
+// Playerクラス
+class Player : public Sprite
+{
+public:
+    Player(int x, int y) : Sprite(x, y, "Player")
+    {
+        
+    }
+};
+
+
+// メイン関数
+int main(int argc, const char * argv[])
+{
+    // SDLの初期化を行う
     if (!Init())
         return -1;
     
-    Sprite* sprite = new Sprite(0, 0, "Player");
     
+    Player* player = new Player(0, 0);
+    
+    // メインループ
     SDL_Event e;
     bool quit = false;
     while (!quit){
         while (SDL_PollEvent(&e)){
-            if (e.type == SDL_QUIT){
-                quit = true;
+            switch (e.type)
+            {
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+                
+                case SDL_KEYDOWN:
+                    switch (e.key.keysym.sym)
+                    {
+                        case SDLK_RIGHT:
+                            player->Forward(5);
+                            break;
+                        case SDLK_LEFT:
+                            player->Forward(-5);
+                            break;
+                        case SDLK_UP:
+                            player->Up(5);
+                            break;
+                        case SDLK_DOWN:
+                            player->Up(-5);
+                            break;
+                    }
+                    break;
+                    
             }
         }
+        
         SDL_RenderClear(renderer);
 
-        sprite->forward(1);
-        sprite->redraw();
+        player->Redraw();
         SDL_RenderPresent(renderer);
      }
     
