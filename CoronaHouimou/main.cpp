@@ -21,7 +21,7 @@ bool Init()
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     
     SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
-    
+        
     return true;
 }
 
@@ -57,8 +57,8 @@ public:
     
     void Redraw()
     {
-        SDL_Rect imageRect={0,0,w,h};
-        SDL_Rect drawRect={px,py,w,h};
+        SDL_Rect imageRect={0, 0, w, h};
+        SDL_Rect drawRect={px, py, w, h};
         SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
     }
     
@@ -86,6 +86,68 @@ public:
 };
 
 
+// Singleton化したキー入力を取るクラス
+class KeyInput
+{
+    static KeyInput* instance;
+    
+public:
+    bool right, left, up, down = false;
+
+    void KeyCheck(SDL_Event e)
+    {
+        switch (e.type)
+        {
+            case SDL_KEYDOWN:
+                switch (e.key.keysym.sym)
+                {
+                    case SDLK_RIGHT:
+                        right = true;
+                        break;
+                    case SDLK_LEFT:
+                        left = true;
+                        break;
+                    case SDLK_UP:
+                        up = true;
+                        break;
+                    case SDLK_DOWN:
+                        down = true;
+                        break;
+                }
+                break;
+                
+            case SDL_KEYUP:
+                switch (e.key.keysym.sym)
+                {
+                    case SDLK_RIGHT:
+                        right = false;
+                        break;
+                    case SDLK_LEFT:
+                        left = false;
+                        break;
+                    case SDLK_UP:
+                        up = false;
+                        break;
+                    case SDLK_DOWN:
+                        down = false;
+                        break;
+                }
+                break;
+
+        }
+    }
+    
+    static KeyInput* Instance()
+    {
+        if (instance == NULL)
+            instance = new KeyInput();
+        
+        return instance;
+    }
+};
+
+KeyInput* KeyInput::instance = NULL;
+
 // メイン関数
 int main(int argc, const char * argv[])
 {
@@ -106,33 +168,23 @@ int main(int argc, const char * argv[])
                 case SDL_QUIT:
                     quit = true;
                     break;
-                
-                case SDL_KEYDOWN:
-                    switch (e.key.keysym.sym)
-                    {
-                        case SDLK_RIGHT:
-                            player->Forward(5);
-                            break;
-                        case SDLK_LEFT:
-                            player->Forward(-5);
-                            break;
-                        case SDLK_UP:
-                            player->Up(5);
-                            break;
-                        case SDLK_DOWN:
-                            player->Up(-5);
-                            break;
-                    }
-                    break;
-                    
             }
+            
+            KeyInput::Instance()->KeyCheck(e);
         }
+        
+        // キー入力状態に応じた処理を行う
+        if (KeyInput::Instance()->right)
+            player->Forward(5);
+        if (KeyInput::Instance()->left)
+            player->Forward(-5);
+
         
         SDL_RenderClear(renderer);
 
         player->Redraw();
         SDL_RenderPresent(renderer);
-     }
+    }
     
     return 0;
 }
