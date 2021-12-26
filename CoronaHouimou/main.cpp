@@ -1,10 +1,15 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "Sprite.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
+#include "Enemy_Cupsule_Orange.hpp"
+#include "Background.hpp"
 
 using namespace std;
 
 SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
+SDL_Renderer* mainRenderer = NULL;
 
 
 // 初期化をまとめた関数
@@ -18,72 +23,12 @@ bool Init()
 
     window = SDL_CreateWindow("コロナ包囲網",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,640,480,SDL_WINDOW_SHOWN);
     
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    mainRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     
-    SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+    SDL_SetRenderDrawColor(mainRenderer, 200, 200, 200, 255);
         
     return true;
 }
-
-
-// スプライトクラス
-class Sprite
-{
-    SDL_Texture* texture;
-    int px, py, w, h;
-    
-public:
-    Sprite(int x, int y, string imageName)
-    {
-        // 画像ファイを読み込む
-        string path = "Images/" + imageName + ".bmp";
-        SDL_Surface* image = SDL_LoadBMP(path.c_str());
-        
-        // 画像の透過とテクスチャを作成する
-        SDL_SetColorKey(image, SDL_TRUE, SDL_MapRGB(image->format, 255, 255, 255));
-        texture = SDL_CreateTextureFromSurface(renderer, image);
-        
-        SDL_FreeSurface(image);
-        
-        //画像のサイズを取得する
-        SDL_QueryTexture(texture, NULL, NULL, &(this->w), &(this->h));
-        px = x ; py = y;
-    }
-
-    ~Sprite()
-    {
-        SDL_DestroyTexture(texture);
-    }
-    
-    void Redraw()
-    {
-        SDL_Rect imageRect={0, 0, w, h};
-        SDL_Rect drawRect={px, py, w, h};
-        SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
-    }
-    
-    void Forward(int d)
-    {
-        px += d;
-    }
-    
-    void Up(int d)
-    {
-        // yのプラス方向は下なので-の値を足している
-        py -= d;
-    }
-};
-
-
-// Playerクラス
-class Player : public Sprite
-{
-public:
-    Player(int x, int y) : Sprite(x, y, "Player")
-    {
-        
-    }
-};
 
 
 // Singleton化したキー入力を取るクラス
@@ -156,12 +101,29 @@ int main(int argc, const char * argv[])
         return -1;
     
     
-    Player* player = new Player(0, 0);
+    Player* player = new Player(0, 0, mainRenderer);
+    Enemy_Cupsule_Orange* orange = new Enemy_Cupsule_Orange(5, 5, mainRenderer);
+    Background* background = new Background(mainRenderer);
     
+    
+    // フレームレートを調整する為の変数
+    int prevFrameEndTime = 0, nowFrameStartTime;
+        
     // メインループ
     SDL_Event e;
     bool quit = false;
-    while (!quit){
+    while (!quit)
+    {
+        // フレームの処理が始まった時間を取得する
+        nowFrameStartTime = SDL_GetTicks();
+        
+        // 前フレームと今フレームの時間を見て、差が16ミリ秒以内の場合は16ミリ秒の差が出るように調整する
+        if (prevFrameEndTime - nowFrameStartTime < 16)
+        {
+            SDL_Delay(16 - (prevFrameEndTime - nowFrameStartTime));
+        }
+        
+        // イベントの処理を行う
         while (SDL_PollEvent(&e)){
             switch (e.type)
             {
@@ -175,15 +137,36 @@ int main(int argc, const char * argv[])
         
         // キー入力状態に応じた処理を行う
         if (KeyInput::Instance()->right)
-            player->Forward(5);
+        {
+            orange->Right(-1);
+            background->Right(-1);
+        }
         if (KeyInput::Instance()->left)
-            player->Forward(-5);
-
+        {
+            orange->Right(1);
+            background->Right(1);
+        }
+        if (KeyInput::Instance()->up)
+        {
+            orange->Up(-1);
+            background->Up(-1);
+        }
+        if (KeyInput::Instance()->down)
+        {
+            orange->Up(1);
+            background->Up(1);
+        }
         
-        SDL_RenderClear(renderer);
+        SDL_RenderClear(mainRenderer);
 
+        background->Redraw();
         player->Redraw();
-        SDL_RenderPresent(renderer);
+        orange->Redraw();
+        
+        SDL_RenderPresent(mainRenderer);
+        
+        // フレームの処理がすべて終了した時間を記録する
+        prevFrameEndTime = SDL_GetTicks();
     }
     
     return 0;
