@@ -12,6 +12,8 @@ public:
         ChangeReducRatio(2.0);
         SetPosToCenter();
     }
+    
+    void Redraw();
 };
 
 #endif /* Background_hpp */
