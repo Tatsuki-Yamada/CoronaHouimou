@@ -26,3 +26,17 @@ void Player::ChaseMouse()
     
     px = mouse_pos.x; py = mouse_pos.y;
 }
+
+
+Vector2 Player::GetPos()
+{
+    Vector2 v = {px, py};
+    return v;
+}
+
+
+// playerはpxとpyが中心になるよう設定されているため、そのまま返すようにする。
+Vector2 Player::GetCenterPos()
+{
+    return GetPos();
+}

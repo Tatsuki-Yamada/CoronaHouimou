@@ -29,6 +29,7 @@ public:
     ~Sprite();
     
     Vector2 GetReducSize();
+    Vector2 GetCenterPos();
     void ChangeReducRatio(float ratio);
     void SetPosToCenter();
     void Redraw();
@@ -37,6 +38,7 @@ public:
     void Left(int d);
     void Up(int d);
     void Down(int d);
+    bool CheckHitBoxToCircle(int r, Vector2 CenterPos);
 };
 
 

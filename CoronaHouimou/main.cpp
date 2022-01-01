@@ -11,6 +11,8 @@ using namespace std;
 SDL_Window* window = NULL;
 SDL_Renderer* mainRenderer = NULL;
 
+int playerMoveSpeed = 3;
+
 
 // 初期化をまとめた関数
 bool Init()
@@ -138,24 +140,30 @@ int main(int argc, const char * argv[])
         // キー入力状態に応じた処理を行う
         if (KeyInput::Instance()->right)
         {
-            orange->Right(-1);
-            background->Right(-1);
+            orange->Right(-playerMoveSpeed);
+            background->Right(-playerMoveSpeed);
         }
         if (KeyInput::Instance()->left)
         {
-            orange->Right(1);
-            background->Right(1);
+            orange->Left(-playerMoveSpeed);
+            background->Left(-playerMoveSpeed);
         }
         if (KeyInput::Instance()->up)
         {
-            orange->Up(-1);
-            background->Up(-1);
+            orange->Up(-playerMoveSpeed);
+            background->Up(-playerMoveSpeed);
         }
         if (KeyInput::Instance()->down)
         {
-            orange->Up(1);
-            background->Up(1);
+            orange->Down(-playerMoveSpeed);
+            background->Down(-playerMoveSpeed);
         }
+        
+        orange->MoveToPlayer(player->GetPos());
+        
+        if (orange->CheckHitBoxToCircle(player->r, player->GetCenterPos()))
+            orange->Teleport(10, 10);
+        
         
         SDL_RenderClear(mainRenderer);
 

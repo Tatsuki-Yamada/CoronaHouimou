@@ -36,6 +36,13 @@ Vector2 Sprite::GetReducSize()
 }
 
 
+Vector2 Sprite::GetCenterPos()
+{
+    Vector2 reducSize = GetReducSize();
+    return {px + reducSize.x / 2, py + reducSize.y / 2};
+}
+
+
 void Sprite::ChangeReducRatio(float ratio)
 {
     reducRatio = ratio;
@@ -49,7 +56,7 @@ void Sprite::SetPosToCenter()
     SDL_GetRendererOutputSize(renderer, &centerX, &centerY);
     centerX /= 2;
     centerY /= 2;
-    
+        
     px = centerX;
     py = centerY;
 }
@@ -61,7 +68,14 @@ void Sprite::Redraw()
     
     SDL_Rect imageRect={0, 0, w, h};
     SDL_Rect drawRect={px - reducSize.x / 2, py - reducSize.y / 2, reducSize.x, reducSize.y};
+    
     SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
+}
+
+
+void Sprite::Teleport(int x, int y)
+{
+    px = x; py = y;
 }
 
 
@@ -86,4 +100,24 @@ void Sprite::Down(int d)
     Up(-d);
 }
 
+
+// 長方形側のオブジェクトから見て円側のオブジェクトが当たっているかの判定
+bool Sprite::CheckHitBoxToCircle(int r, Vector2 centerPos)
+{
+    Vector2 reducSize = GetReducSize();
+    float rootedR = r / sqrt(2);
+    
+    Vector2 extendLeftUp = {int(px - reducSize.x / 2 - rootedR), int(py - reducSize.y / 2 - rootedR)};
+    Vector2 extendRightDown = {int(px + reducSize.x / 2 + rootedR), int(py + reducSize.y / 2 + rootedR)};
+    
+    if (extendLeftUp.x <= centerPos.x && centerPos.x <= extendRightDown.x)
+    {
+        if (extendLeftUp.y <= centerPos.y && centerPos.y <= extendRightDown.y)
+        {
+            return true;
+        }
+    }
+    
+    return false;
+}
 

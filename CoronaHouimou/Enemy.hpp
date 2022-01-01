@@ -11,7 +11,7 @@ public:
         ChangeReducRatio(0.2);
     }
     
-    void MoveToPlayer();
+    void MoveToPlayer(Vector2 targetPos);
 };
 
 
