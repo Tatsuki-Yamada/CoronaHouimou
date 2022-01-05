@@ -1,22 +1,20 @@
 #include <iostream>
 #include <SDL2/SDL.h>
-#include "Sprite.hpp"
-#include "Player.hpp"
-#include "Enemy.hpp"
-#include "Enemy_Cupsule_Orange.hpp"
-#include "Background.hpp"
+
+#include "GameManager.hpp"
 
 using namespace std;
 
 SDL_Window* window = NULL;
 SDL_Renderer* mainRenderer = NULL;
 
-int playerMoveSpeed = 3;
+KeyInput* KeyInput::instance = nullptr;         // Singletonを使うとき、初期化が必要らしい。できれば他の場所に移したい。
 
 
-// 初期化をまとめた関数
+// SDL周りの初期化をまとめて行う関数。
 bool Init()
 {
+    // 初期化に失敗したらfalseを返す。
     if (SDL_Init(SDL_INIT_EVERYTHING))
     {
         cout << "SDL_Init failed.";
@@ -24,156 +22,67 @@ bool Init()
     }
 
     window = SDL_CreateWindow("コロナ包囲網",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,640,480,SDL_WINDOW_SHOWN);
-    
     mainRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    
     SDL_SetRenderDrawColor(mainRenderer, 200, 200, 200, 255);
         
     return true;
 }
 
 
-// Singleton化したキー入力を取るクラス
-class KeyInput
-{
-    static KeyInput* instance;
-    
-public:
-    bool right, left, up, down = false;
-
-    void KeyCheck(SDL_Event e)
-    {
-        switch (e.type)
-        {
-            case SDL_KEYDOWN:
-                switch (e.key.keysym.sym)
-                {
-                    case SDLK_RIGHT:
-                        right = true;
-                        break;
-                    case SDLK_LEFT:
-                        left = true;
-                        break;
-                    case SDLK_UP:
-                        up = true;
-                        break;
-                    case SDLK_DOWN:
-                        down = true;
-                        break;
-                }
-                break;
-                
-            case SDL_KEYUP:
-                switch (e.key.keysym.sym)
-                {
-                    case SDLK_RIGHT:
-                        right = false;
-                        break;
-                    case SDLK_LEFT:
-                        left = false;
-                        break;
-                    case SDLK_UP:
-                        up = false;
-                        break;
-                    case SDLK_DOWN:
-                        down = false;
-                        break;
-                }
-                break;
-
-        }
-    }
-    
-    static KeyInput* Instance()
-    {
-        if (instance == NULL)
-            instance = new KeyInput();
-        
-        return instance;
-    }
-};
-
-KeyInput* KeyInput::instance = NULL;
-
 // メイン関数
 int main(int argc, const char * argv[])
 {
-    // SDLの初期化を行う
+    // SDLの初期化を行う。初期化に失敗したとき、プログラムを終了させる。
     if (!Init())
         return -1;
+
+    // ゲームマネージャーを生成する。
+    GameManager* gameManager = new GameManager();
+    gameManager->inGameRenderer = mainRenderer;
+    gameManager->GameStart();
     
-    
-    Player* player = new Player(0, 0, mainRenderer);
-    Enemy_Cupsule_Orange* orange = new Enemy_Cupsule_Orange(5, 5, mainRenderer);
-    Background* background = new Background(mainRenderer);
-    
-    
-    // フレームレートを調整する為の変数
+    // フレームレートを調整する為の変数を生成する。
     int prevFrameEndTime = 0, nowFrameStartTime;
-        
-    // メインループ
+
+    // メインループで使う変数を生成する。
     SDL_Event e;
     bool quit = false;
+    
+    // メインループを行う。
     while (!quit)
     {
-        // フレームの処理が始まった時間を取得する
+        // フレームレート固定のため、今フレームの処理が始まった時間を取得する。
         nowFrameStartTime = SDL_GetTicks();
         
-        // 前フレームと今フレームの時間を見て、差が16ミリ秒以内の場合は16ミリ秒の差が出るように調整する
+        // 前フレームと今フレームの時間を見て、差が16ミリ秒以内の場合は16ミリ秒の差が出るように遅延をかける。
         if (prevFrameEndTime - nowFrameStartTime < 16)
         {
             SDL_Delay(16 - (prevFrameEndTime - nowFrameStartTime));
         }
         
-        // イベントの処理を行う
+        // SDLが発するイベントの処理を行う
         while (SDL_PollEvent(&e)){
             switch (e.type)
             {
+                // ウィンドウが閉じられるとき、、ループを抜ける
                 case SDL_QUIT:
                     quit = true;
                     break;
             }
             
+            // キー入力状態を管理するマネージャーに渡す。
             KeyInput::Instance()->KeyCheck(e);
         }
-        
-        // キー入力状態に応じた処理を行う
-        if (KeyInput::Instance()->right)
-        {
-            orange->Right(-playerMoveSpeed);
-            background->Right(-playerMoveSpeed);
-        }
-        if (KeyInput::Instance()->left)
-        {
-            orange->Left(-playerMoveSpeed);
-            background->Left(-playerMoveSpeed);
-        }
-        if (KeyInput::Instance()->up)
-        {
-            orange->Up(-playerMoveSpeed);
-            background->Up(-playerMoveSpeed);
-        }
-        if (KeyInput::Instance()->down)
-        {
-            orange->Down(-playerMoveSpeed);
-            background->Down(-playerMoveSpeed);
-        }
-        
-        orange->MoveToPlayer(player->GetPos());
-        
-        if (orange->CheckHitBoxToCircle(player->r, player->GetCenterPos()))
-            orange->Teleport(10, 10);
-        
-        
-        SDL_RenderClear(mainRenderer);
 
-        background->Redraw();
-        player->Redraw();
-        orange->Redraw();
+        // gameManager側で各オブジェクトが毎フレーム行う処理をさせる。
+        gameManager->Update();
         
+        // レンダラーを一度クリアしてから描画し、その後に反映させる。
+        SDL_RenderClear(mainRenderer);
+        gameManager->Redraw();
         SDL_RenderPresent(mainRenderer);
         
-        // フレームの処理がすべて終了した時間を記録する
+        // フレームレート固定のため、フレームの処理がすべて終了した時間を記録する
         prevFrameEndTime = SDL_GetTicks();
     }
     

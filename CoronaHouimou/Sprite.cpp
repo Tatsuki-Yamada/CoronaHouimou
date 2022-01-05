@@ -1,7 +1,8 @@
 #include "Sprite.hpp"
 
 
-Sprite::Sprite(int x, int y, string imageName, SDL_Renderer* targetRenderer){
+Sprite::Sprite(int x, int y, string imageName, SDL_Renderer* targetRenderer)
+{
     renderer = targetRenderer;
     
     // 画像ファイを読み込む
@@ -43,7 +44,7 @@ Vector2 Sprite::GetCenterPos()
 }
 
 
-void Sprite::ChangeReducRatio(float ratio)
+void Sprite::SetReducRatio(float ratio)
 {
     reducRatio = ratio;
 }
@@ -121,3 +122,12 @@ bool Sprite::CheckHitBoxToCircle(int r, Vector2 centerPos)
     return false;
 }
 
+
+// オブジェクトがマウスに追従する関数
+void Sprite::ChaseMouse()
+{
+    SDL_Point mouse_pos = {0, 0};
+    SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+    
+    px = mouse_pos.x; py = mouse_pos.y;
+}

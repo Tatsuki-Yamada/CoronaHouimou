@@ -8,7 +8,7 @@ class Enemy : public Sprite
 public:
     Enemy(int x, int y, string type, SDL_Renderer* targetRenderer) : Sprite(x, y, type, targetRenderer)
     {
-        ChangeReducRatio(0.2);
+        SetReducRatio(0.2);
     }
     
     void MoveToPlayer(Vector2 targetPos);

@@ -9,7 +9,7 @@ class Background : public Sprite
 public:
     Background(SDL_Renderer* targetRenderer) : Sprite(0, 0, "Background", targetRenderer)
     {
-        ChangeReducRatio(2.0);
+        SetReducRatio(2.0);
         SetPosToCenter();
     }
     

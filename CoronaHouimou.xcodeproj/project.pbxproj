@@ -13,6 +13,9 @@
 		27259947277061A30008E5D2 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27259945277061A20008E5D2 /* Sprite.cpp */; };
 		2725994A277069DB0008E5D2 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27259948277069DB0008E5D2 /* Player.cpp */; };
 		2725994D27706ACD0008E5D2 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2725994B27706ACD0008E5D2 /* Enemy.cpp */; };
+		275BF3192785B3CB000303C2 /* Aim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF3172785B3CB000303C2 /* Aim.cpp */; };
+		275BF31C2785B7AE000303C2 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF31A2785B7AE000303C2 /* GameManager.cpp */; };
+		275BF31F2785BEBB000303C2 /* KeyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF31D2785BEBB000303C2 /* KeyManager.cpp */; };
 		27C2B7782778981100B0E643 /* Enemy_Cupsule_Orange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C2B7762778981100B0E643 /* Enemy_Cupsule_Orange.cpp */; };
 		27C2B77C2778B0FC00B0E643 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C2B77A2778B0FC00B0E643 /* Background.cpp */; };
 /* End PBXBuildFile section */
@@ -40,6 +43,12 @@
 		27259949277069DB0008E5D2 /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
 		2725994B27706ACD0008E5D2 /* Enemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy.cpp; sourceTree = "<group>"; };
 		2725994C27706ACD0008E5D2 /* Enemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Enemy.hpp; sourceTree = "<group>"; };
+		275BF3172785B3CB000303C2 /* Aim.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Aim.cpp; sourceTree = "<group>"; };
+		275BF3182785B3CB000303C2 /* Aim.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Aim.hpp; sourceTree = "<group>"; };
+		275BF31A2785B7AE000303C2 /* GameManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
+		275BF31B2785B7AE000303C2 /* GameManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameManager.hpp; sourceTree = "<group>"; };
+		275BF31D2785BEBB000303C2 /* KeyManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyManager.cpp; sourceTree = "<group>"; };
+		275BF31E2785BEBB000303C2 /* KeyManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = KeyManager.hpp; sourceTree = "<group>"; };
 		27C2B7762778981100B0E643 /* Enemy_Cupsule_Orange.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy_Cupsule_Orange.cpp; sourceTree = "<group>"; };
 		27C2B7772778981100B0E643 /* Enemy_Cupsule_Orange.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Enemy_Cupsule_Orange.hpp; sourceTree = "<group>"; };
 		27C2B7792778B00400B0E643 /* Credits.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Credits.txt; sourceTree = "<group>"; };
@@ -81,6 +90,10 @@
 			isa = PBXGroup;
 			children = (
 				27259939276CB9780008E5D2 /* main.cpp */,
+				275BF31D2785BEBB000303C2 /* KeyManager.cpp */,
+				275BF31E2785BEBB000303C2 /* KeyManager.hpp */,
+				275BF3172785B3CB000303C2 /* Aim.cpp */,
+				275BF3182785B3CB000303C2 /* Aim.hpp */,
 				27259945277061A20008E5D2 /* Sprite.cpp */,
 				27259946277061A20008E5D2 /* Sprite.hpp */,
 				27259948277069DB0008E5D2 /* Player.cpp */,
@@ -92,6 +105,8 @@
 				27C2B7792778B00400B0E643 /* Credits.txt */,
 				27C2B77A2778B0FC00B0E643 /* Background.cpp */,
 				27C2B77B2778B0FC00B0E643 /* Background.hpp */,
+				275BF31A2785B7AE000303C2 /* GameManager.cpp */,
+				275BF31B2785B7AE000303C2 /* GameManager.hpp */,
 			);
 			path = CoronaHouimou;
 			sourceTree = "<group>";
@@ -164,8 +179,11 @@
 			files = (
 				2725994D27706ACD0008E5D2 /* Enemy.cpp in Sources */,
 				27259947277061A30008E5D2 /* Sprite.cpp in Sources */,
+				275BF3192785B3CB000303C2 /* Aim.cpp in Sources */,
 				2725993A276CB9790008E5D2 /* main.cpp in Sources */,
+				275BF31F2785BEBB000303C2 /* KeyManager.cpp in Sources */,
 				27C2B77C2778B0FC00B0E643 /* Background.cpp in Sources */,
+				275BF31C2785B7AE000303C2 /* GameManager.cpp in Sources */,
 				27C2B7782778981100B0E643 /* Enemy_Cupsule_Orange.cpp in Sources */,
 				2725994A277069DB0008E5D2 /* Player.cpp in Sources */,
 			);
