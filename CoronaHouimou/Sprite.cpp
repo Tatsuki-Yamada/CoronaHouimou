@@ -37,10 +37,11 @@ Vector2 Sprite::GetReducSize()
 }
 
 
-Vector2 Sprite::GetCenterPos()
+// 座標を取得する関数。
+Vector2 Sprite::GetPos()
 {
-    Vector2 reducSize = GetReducSize();
-    return {px + reducSize.x / 2, py + reducSize.y / 2};
+    Vector2 v = {px, py};
+    return v;
 }
 
 
@@ -63,6 +64,7 @@ void Sprite::SetPosToCenter()
 }
 
 
+// 描画する関数。px, pyが画像の中心になるように描画している。
 void Sprite::Redraw()
 {
     Vector2 reducSize = GetReducSize();
@@ -80,30 +82,43 @@ void Sprite::Teleport(int x, int y)
 }
 
 
-void Sprite::Right(int d)
+void Sprite::Right(int d, bool divR2)
 {
+    // 斜め移動のときは移動量にルート2を割る。
+    if (divR2)
+    {
+        px += d / sqrt(2);
+        return;
+    }
     px += d;
 }
 
-void Sprite::Left(int d)
+void Sprite::Left(int d, bool divR2)
 {
-    Right(-d);
+    Right(-d, divR2);
 }
 
-void Sprite::Up(int d)
+void Sprite::Up(int d, bool divR2)
 {
-    // yのプラス方向は下なので-の値を足している
+    // yのプラス方向は下なので-の値を足している。
+    
+    // 斜め移動のときは移動量にルート2を割る。
+    if (divR2)
+    {
+        py -= d / sqrt(2);
+        return;
+    }
     py -= d;
 }
 
-void Sprite::Down(int d)
+void Sprite::Down(int d, bool divR2)
 {
-    Up(-d);
+    Up(-d, divR2);
 }
 
 
 // 長方形側のオブジェクトから見て円側のオブジェクトが当たっているかの判定
-bool Sprite::CheckHitBoxToCircle(int r, Vector2 centerPos)
+bool Sprite::CheckHitRectToCircle(int r, Vector2 centerPos)
 {
     Vector2 reducSize = GetReducSize();
     float rootedR = r / sqrt(2);

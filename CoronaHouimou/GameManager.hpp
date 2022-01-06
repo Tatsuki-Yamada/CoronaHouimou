@@ -5,6 +5,7 @@
 
 #include "Aim.hpp"
 #include "Background.hpp"
+#include "BulletManager.hpp"
 #include "Enemy.hpp"
 #include "Enemy_Cupsule_Orange.hpp"
 #include "KeyManager.hpp"

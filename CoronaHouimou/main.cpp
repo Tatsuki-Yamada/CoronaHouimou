@@ -8,7 +8,8 @@ using namespace std;
 SDL_Window* window = NULL;
 SDL_Renderer* mainRenderer = NULL;
 
-KeyInput* KeyInput::instance = nullptr;         // Singletonを使うとき、初期化が必要らしい。できれば他の場所に移したい。
+KeyManager* KeyManager::instance = nullptr;         // Singletonを使うとき、初期化が必要らしい。できれば他の場所に移したい。
+BulletManager* BulletManager::instance = nullptr;
 
 
 // SDL周りの初期化をまとめて行う関数。
@@ -41,6 +42,9 @@ int main(int argc, const char * argv[])
     gameManager->inGameRenderer = mainRenderer;
     gameManager->GameStart();
     
+    // 弾のマネージャーにレンダラーを設定する。
+    BulletManager::Instance()->inGameRenderer = mainRenderer;
+    
     // フレームレートを調整する為の変数を生成する。
     int prevFrameEndTime = 0, nowFrameStartTime;
 
@@ -71,7 +75,7 @@ int main(int argc, const char * argv[])
             }
             
             // キー入力状態を管理するマネージャーに渡す。
-            KeyInput::Instance()->KeyCheck(e);
+            KeyManager::Instance()->KeyCheck(e);
         }
 
         // gameManager側で各オブジェクトが毎フレーム行う処理をさせる。

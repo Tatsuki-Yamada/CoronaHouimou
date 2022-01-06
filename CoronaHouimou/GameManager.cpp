@@ -22,33 +22,50 @@ void GameManager::Update()
     
     // 敵がプレイヤーと当たったとき、敵をテレポートさせる。
     // TODO. 当たり判定のテスト用なので、いずれ弾と当たったときの処理に書き換える。
-    if (orange->CheckHitBoxToCircle(player->r, player->GetCenterPos()))
+    if (orange->CheckHitRectToCircle(player->r, player->GetPos()))
         orange->Teleport(10, 10);
+    
+    BulletManager::Instance()->MoveBullets();
     
     /// キー入力の状態を見て、それに応じた処理を行う。
     /// 現時点で行っている処理->
     ///         プレイヤーの移動に応じた敵の移動
     ///         プレイヤーの移動に応じた背景の移動
+    ///         プレイヤーの移動に応じた弾の移動
     {
-        if (KeyInput::Instance()->right)
+        // プレイヤーが斜め移動をするとき、移動量にルート2を割るフラグを渡す。
+        bool divR2 = false;
+        if ((KeyManager::Instance()->right || KeyManager::Instance()->left) && (KeyManager::Instance()->up || KeyManager::Instance()->down))
+            divR2 = true;
+        
+        
+        if (KeyManager::Instance()->right)
         {
-            orange->Right(-playerMoveSpeed);
-            background->Right(-playerMoveSpeed);
+            orange->Left(playerMoveSpeed, divR2);
+            background->Left(playerMoveSpeed, divR2);
+            BulletManager::Instance()->LeftBullets(playerMoveSpeed, divR2);
         }
-        if (KeyInput::Instance()->left)
+        if (KeyManager::Instance()->left)
         {
-            orange->Left(-playerMoveSpeed);
-            background->Left(-playerMoveSpeed);
+            orange->Right(playerMoveSpeed, divR2);
+            background->Right(playerMoveSpeed, divR2);
+            BulletManager::Instance()->RightBullets(playerMoveSpeed, divR2);
         }
-        if (KeyInput::Instance()->up)
+        if (KeyManager::Instance()->up)
         {
-            orange->Up(-playerMoveSpeed);
-            background->Up(-playerMoveSpeed);
+            orange->Down(playerMoveSpeed, divR2);
+            background->Down(playerMoveSpeed, divR2);
+            BulletManager::Instance()->DownBullets(playerMoveSpeed, divR2);
         }
-        if (KeyInput::Instance()->down)
+        if (KeyManager::Instance()->down)
         {
-            orange->Down(-playerMoveSpeed);
-            background->Down(-playerMoveSpeed);
+            orange->Up(playerMoveSpeed, divR2);
+            background->Up(playerMoveSpeed, divR2);
+            BulletManager::Instance()->UpBullets(playerMoveSpeed, divR2);
+        }
+        if (KeyManager::Instance()->leftClick || KeyManager::Instance()->space)
+        {
+            BulletManager::Instance()->CreateBullet(player->GetPos(), aim->GetPos());
         }
     }
 }
@@ -77,4 +94,6 @@ void GameManager::Redraw()
     {
         aim->Redraw();
     }
+    
+    BulletManager::Instance()->RedrawBullets();
 }

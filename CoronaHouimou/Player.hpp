@@ -17,8 +17,6 @@ public:
     }
     
     void Redraw();
-    Vector2 GetPos();
-    Vector2 GetCenterPos();
 };
 
 
