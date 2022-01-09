@@ -25,6 +25,8 @@ protected:
     float reducRatio;
     
 public:
+    bool isActive = true;
+
     Sprite(int x, int y, string imageName, SDL_Renderer* targetRenderer);
     ~Sprite();
     

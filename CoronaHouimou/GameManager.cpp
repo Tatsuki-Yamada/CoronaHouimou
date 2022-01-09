@@ -14,6 +14,9 @@ void GameManager::GameStart()
 // 各オブジェクトが毎フレーム行う処理をまとめた関数。
 void GameManager::Update()
 {
+    //cout << inGamePos.x << ", " << inGamePos.y << endl;           // inGamePosを確認したいときにコメント解除する。
+
+    
     // 照準をマウスカーソルに追従させる。
     aim->ChaseMouse();
     
@@ -23,7 +26,11 @@ void GameManager::Update()
     // 敵がプレイヤーと当たったとき、敵をテレポートさせる。
     // TODO. 当たり判定のテスト用なので、いずれ弾と当たったときの処理に書き換える。
     if (orange->CheckHitRectToCircle(player->r, player->GetPos()))
+    {
         orange->Teleport(10, 10);
+        player->TakeAttack();
+    }
+    
     
     BulletManager::Instance()->MoveBullets();
     
@@ -41,27 +48,68 @@ void GameManager::Update()
         
         if (KeyManager::Instance()->right)
         {
-            orange->Left(playerMoveSpeed, divR2);
-            background->Left(playerMoveSpeed, divR2);
-            BulletManager::Instance()->LeftBullets(playerMoveSpeed, divR2);
+            Vector2 prevInGamePos = inGamePos;
+            inGamePos.x += divR2 ? playerMoveSpeed * sqrt(2) : playerMoveSpeed;
+            
+            if (inGamePos.x > moveLimit)
+            {
+                inGamePos = prevInGamePos;
+            }
+            else
+            {
+                orange->Left(playerMoveSpeed, divR2);
+                background->Left(playerMoveSpeed, divR2);
+                BulletManager::Instance()->LeftBullets(playerMoveSpeed, divR2);
+            }
+            
         }
         if (KeyManager::Instance()->left)
         {
-            orange->Right(playerMoveSpeed, divR2);
-            background->Right(playerMoveSpeed, divR2);
-            BulletManager::Instance()->RightBullets(playerMoveSpeed, divR2);
+            Vector2 prevInGamePos = inGamePos;
+            inGamePos.x -= divR2 ? playerMoveSpeed * sqrt(2) : playerMoveSpeed;
+
+            if (inGamePos.x < -moveLimit)
+            {
+                inGamePos = prevInGamePos;
+            }
+            else
+            {
+                orange->Right(playerMoveSpeed, divR2);
+                background->Right(playerMoveSpeed, divR2);
+                BulletManager::Instance()->RightBullets(playerMoveSpeed, divR2);
+            }
         }
         if (KeyManager::Instance()->up)
         {
-            orange->Down(playerMoveSpeed, divR2);
-            background->Down(playerMoveSpeed, divR2);
-            BulletManager::Instance()->DownBullets(playerMoveSpeed, divR2);
+            Vector2 prevInGamePos = inGamePos;
+            inGamePos.y -= divR2 ? playerMoveSpeed * sqrt(2) : playerMoveSpeed;
+
+            if (inGamePos.y < -moveLimit)
+            {
+                inGamePos = prevInGamePos;
+            }
+            else
+            {
+                orange->Down(playerMoveSpeed, divR2);
+                background->Down(playerMoveSpeed, divR2);
+                BulletManager::Instance()->DownBullets(playerMoveSpeed, divR2);
+            }
         }
         if (KeyManager::Instance()->down)
         {
-            orange->Up(playerMoveSpeed, divR2);
-            background->Up(playerMoveSpeed, divR2);
-            BulletManager::Instance()->UpBullets(playerMoveSpeed, divR2);
+            Vector2 prevInGamePos = inGamePos;
+            inGamePos.y += divR2 ? playerMoveSpeed * sqrt(2) : playerMoveSpeed;
+
+            if (inGamePos.y > moveLimit)
+            {
+                inGamePos = prevInGamePos;
+            }
+            else
+            {
+                orange->Up(playerMoveSpeed, divR2);
+                background->Up(playerMoveSpeed, divR2);
+                BulletManager::Instance()->UpBullets(playerMoveSpeed, divR2);
+            }
         }
         if (KeyManager::Instance()->leftClick || KeyManager::Instance()->space)
         {

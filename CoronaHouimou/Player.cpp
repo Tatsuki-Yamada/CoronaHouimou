@@ -11,3 +11,15 @@ void Player::Redraw()
     SDL_Rect drawRect={px - reducSize.x / 2, py - reducSize.y / 2, reducSize.x, reducSize.y};
     SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
 }
+
+
+void Player::TakeAttack()
+{
+    cout << "damage." << endl;
+    hp -= 1;
+    if (hp <= 0)
+    {
+        // hpが0になったときの処理を書く。
+        cout << "player is dead." << endl;
+    }
+}

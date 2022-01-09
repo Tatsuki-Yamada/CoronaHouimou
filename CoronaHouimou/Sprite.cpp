@@ -67,14 +67,16 @@ void Sprite::SetPosToCenter()
 // 描画する関数。px, pyが画像の中心になるように描画している。
 void Sprite::Redraw()
 {
-    Vector2 reducSize = GetReducSize();
-    
-    SDL_Rect imageRect={0, 0, w, h};
-    SDL_Rect drawRect={px - reducSize.x / 2, py - reducSize.y / 2, reducSize.x, reducSize.y};
-    
-    SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
+    if (isActive)
+    {
+        Vector2 reducSize = GetReducSize();
+        
+        SDL_Rect imageRect={0, 0, w, h};
+        SDL_Rect drawRect={px - reducSize.x / 2, py - reducSize.y / 2, reducSize.x, reducSize.y};
+        
+        SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
+    }
 }
-
 
 void Sprite::Teleport(int x, int y)
 {

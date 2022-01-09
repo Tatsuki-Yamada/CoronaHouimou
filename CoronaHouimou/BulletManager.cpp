@@ -7,6 +7,19 @@ void BulletManager::CreateBullet(Vector2 startPos, Vector2 targetPos)
     // 今フレームの時間を取得し、最後に弾を撃ったフレームからインターバル秒以上の間隔があれば弾を撃つ。
     if (SDL_GetTicks() - lastShotTime > shotInterval)
     {
+        cout << bullets.size() << endl;
+        // 配列内に無効状態の弾があればそれを再度有効化して終わる。
+        for (auto bulletItr = bullets.begin(); bulletItr != bullets.end();)
+        {
+            if (!(*bulletItr)->isActive)
+            {
+                (*bulletItr)->Remake(startPos, targetPos);
+                lastShotTime = SDL_GetTicks();
+                return;
+            }
+            
+            ++bulletItr;
+        }
         bullets.push_back(new Bullet(startPos, targetPos, inGameRenderer));
         lastShotTime = SDL_GetTicks();
     }

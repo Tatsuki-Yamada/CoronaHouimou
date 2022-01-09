@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <vector>
 #include "Bullet.hpp"
+#include "GameManager.hpp"
 
 
 /// <summary>

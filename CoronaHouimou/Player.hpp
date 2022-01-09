@@ -6,7 +6,10 @@
 
 // Playerクラス
 class Player : public Sprite
-{    
+{
+private:
+    int hp = 5;
+    
 public:
     int r;
     
@@ -17,6 +20,7 @@ public:
     }
     
     void Redraw();
+    void TakeAttack();
 };
 
 

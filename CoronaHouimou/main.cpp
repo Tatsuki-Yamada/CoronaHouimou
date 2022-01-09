@@ -10,6 +10,8 @@ SDL_Renderer* mainRenderer = NULL;
 
 KeyManager* KeyManager::instance = nullptr;         // Singletonを使うとき、初期化が必要らしい。できれば他の場所に移したい。
 BulletManager* BulletManager::instance = nullptr;
+GameManager* GameManager::instance = nullptr;
+
 
 
 // SDL周りの初期化をまとめて行う関数。
@@ -38,9 +40,8 @@ int main(int argc, const char * argv[])
         return -1;
 
     // ゲームマネージャーを生成する。
-    GameManager* gameManager = new GameManager();
-    gameManager->inGameRenderer = mainRenderer;
-    gameManager->GameStart();
+    GameManager::Instance()->inGameRenderer = mainRenderer;
+    GameManager::Instance()->GameStart();
     
     // 弾のマネージャーにレンダラーを設定する。
     BulletManager::Instance()->inGameRenderer = mainRenderer;
@@ -79,11 +80,11 @@ int main(int argc, const char * argv[])
         }
 
         // gameManager側で各オブジェクトが毎フレーム行う処理をさせる。
-        gameManager->Update();
+        GameManager::Instance()->Update();
         
         // レンダラーを一度クリアしてから描画し、その後に反映させる。
         SDL_RenderClear(mainRenderer);
-        gameManager->Redraw();
+        GameManager::Instance()->Redraw();
         SDL_RenderPresent(mainRenderer);
         
         // フレームレート固定のため、フレームの処理がすべて終了した時間を記録する
