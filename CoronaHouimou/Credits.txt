@@ -5,3 +5,7 @@
 キャラクター素材
     いらすとや
         https://www.irasutoya.com/
+
+フォント
+    木漏れ日ゴシック
+        http://modi.jpn.org/font_komorebi-gothic.php

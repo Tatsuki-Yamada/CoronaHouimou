@@ -15,6 +15,10 @@
 		2725994D27706ACD0008E5D2 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2725994B27706ACD0008E5D2 /* Enemy.cpp */; };
 		2726A5C927872E3D008092C1 /* Bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5C727872E3D008092C1 /* Bullet.cpp */; };
 		2726A5CC27872F7F008092C1 /* BulletManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5CA27872F7F008092C1 /* BulletManager.cpp */; };
+		2726A5CF278C327D008092C1 /* EnemyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5CD278C327D008092C1 /* EnemyManager.cpp */; };
+		2726A5D227903495008092C1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5D027903495008092C1 /* Button.cpp */; };
+		2726A5D42790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2726A5D32790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib */; };
+		2726A5D72790B2D0008092C1 /* Title.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5D52790B2D0008092C1 /* Title.cpp */; };
 		275BF3192785B3CB000303C2 /* Aim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF3172785B3CB000303C2 /* Aim.cpp */; };
 		275BF31C2785B7AE000303C2 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF31A2785B7AE000303C2 /* GameManager.cpp */; };
 		275BF31F2785BEBB000303C2 /* KeyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF31D2785BEBB000303C2 /* KeyManager.cpp */; };
@@ -49,6 +53,13 @@
 		2726A5C827872E3D008092C1 /* Bullet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Bullet.hpp; sourceTree = "<group>"; };
 		2726A5CA27872F7F008092C1 /* BulletManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BulletManager.cpp; sourceTree = "<group>"; };
 		2726A5CB27872F7F008092C1 /* BulletManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BulletManager.hpp; sourceTree = "<group>"; };
+		2726A5CD278C327D008092C1 /* EnemyManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EnemyManager.cpp; sourceTree = "<group>"; };
+		2726A5CE278C327D008092C1 /* EnemyManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnemyManager.hpp; sourceTree = "<group>"; };
+		2726A5D027903495008092C1 /* Button.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
+		2726A5D127903495008092C1 /* Button.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Button.hpp; sourceTree = "<group>"; };
+		2726A5D32790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_ttf-2.0.0.dylib"; path = "../../../../../usr/local/Cellar/sdl2_ttf/2.0.15/lib/libSDL2_ttf-2.0.0.dylib"; sourceTree = "<group>"; };
+		2726A5D52790B2D0008092C1 /* Title.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Title.cpp; sourceTree = "<group>"; };
+		2726A5D62790B2D0008092C1 /* Title.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Title.hpp; sourceTree = "<group>"; };
 		275BF3172785B3CB000303C2 /* Aim.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Aim.cpp; sourceTree = "<group>"; };
 		275BF3182785B3CB000303C2 /* Aim.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Aim.hpp; sourceTree = "<group>"; };
 		275BF31A2785B7AE000303C2 /* GameManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
@@ -67,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2726A5D42790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib in Frameworks */,
 				27259944276CBD150008E5D2 /* libSDL2_image-2.0.0.dylib in Frameworks */,
 				27259942276CBB400008E5D2 /* libSDL2-2.0.0.dylib in Frameworks */,
 			);
@@ -96,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				27259939276CB9780008E5D2 /* main.cpp */,
+				2726A5D52790B2D0008092C1 /* Title.cpp */,
+				2726A5D62790B2D0008092C1 /* Title.hpp */,
 				275BF31D2785BEBB000303C2 /* KeyManager.cpp */,
 				275BF31E2785BEBB000303C2 /* KeyManager.hpp */,
 				275BF3172785B3CB000303C2 /* Aim.cpp */,
@@ -106,6 +120,8 @@
 				27259949277069DB0008E5D2 /* Player.hpp */,
 				2725994B27706ACD0008E5D2 /* Enemy.cpp */,
 				2725994C27706ACD0008E5D2 /* Enemy.hpp */,
+				2726A5D027903495008092C1 /* Button.cpp */,
+				2726A5D127903495008092C1 /* Button.hpp */,
 				27C2B7762778981100B0E643 /* Enemy_Cupsule_Orange.cpp */,
 				27C2B7772778981100B0E643 /* Enemy_Cupsule_Orange.hpp */,
 				27C2B7792778B00400B0E643 /* Credits.txt */,
@@ -117,6 +133,8 @@
 				2726A5C827872E3D008092C1 /* Bullet.hpp */,
 				2726A5CA27872F7F008092C1 /* BulletManager.cpp */,
 				2726A5CB27872F7F008092C1 /* BulletManager.hpp */,
+				2726A5CD278C327D008092C1 /* EnemyManager.cpp */,
+				2726A5CE278C327D008092C1 /* EnemyManager.hpp */,
 			);
 			path = CoronaHouimou;
 			sourceTree = "<group>";
@@ -124,6 +142,7 @@
 		27259940276CBB400008E5D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2726A5D32790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib */,
 				27259943276CBD150008E5D2 /* libSDL2_image-2.0.0.dylib */,
 				27259941276CBB400008E5D2 /* libSDL2-2.0.0.dylib */,
 			);
@@ -189,14 +208,17 @@
 			files = (
 				2725994D27706ACD0008E5D2 /* Enemy.cpp in Sources */,
 				2726A5CC27872F7F008092C1 /* BulletManager.cpp in Sources */,
+				2726A5D72790B2D0008092C1 /* Title.cpp in Sources */,
 				27259947277061A30008E5D2 /* Sprite.cpp in Sources */,
 				275BF3192785B3CB000303C2 /* Aim.cpp in Sources */,
 				2725993A276CB9790008E5D2 /* main.cpp in Sources */,
 				275BF31F2785BEBB000303C2 /* KeyManager.cpp in Sources */,
 				2726A5C927872E3D008092C1 /* Bullet.cpp in Sources */,
 				27C2B77C2778B0FC00B0E643 /* Background.cpp in Sources */,
+				2726A5D227903495008092C1 /* Button.cpp in Sources */,
 				275BF31C2785B7AE000303C2 /* GameManager.cpp in Sources */,
 				27C2B7782778981100B0E643 /* Enemy_Cupsule_Orange.cpp in Sources */,
+				2726A5CF278C327D008092C1 /* EnemyManager.cpp in Sources */,
 				2725994A277069DB0008E5D2 /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,6 +351,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/sdl2/2.0.16/lib,
 					/usr/local/Cellar/sdl2_image/2.0.5/lib,
+					/usr/local/Cellar/sdl2_ttf/2.0.15/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -344,6 +367,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/sdl2/2.0.16/lib,
 					/usr/local/Cellar/sdl2_image/2.0.5/lib,
+					/usr/local/Cellar/sdl2_ttf/2.0.15/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

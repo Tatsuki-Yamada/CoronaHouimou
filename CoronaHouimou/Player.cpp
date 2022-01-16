@@ -15,11 +15,9 @@ void Player::Redraw()
 
 void Player::TakeAttack()
 {
-    cout << "damage." << endl;
     hp -= 1;
     if (hp <= 0)
     {
-        // hpが0になったときの処理を書く。
-        cout << "player is dead." << endl;
+
     }
 }

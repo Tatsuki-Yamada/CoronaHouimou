@@ -1,6 +1,9 @@
 #include "KeyManager.hpp"
 
 
+KeyManager* KeyManager::instance = nullptr;
+
+
 // SDLのキーイベントを貰い、それに応じてフラグの上げ下げを行う。
 void KeyManager::KeyCheck(SDL_Event e)
 {

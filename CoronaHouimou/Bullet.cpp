@@ -35,6 +35,9 @@ void Bullet::Move()
         }
         
     }
-    
+    else
+    {
+        px = 5000; py = 5000;
+    }
 }
 

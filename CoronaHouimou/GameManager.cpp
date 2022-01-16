@@ -1,13 +1,16 @@
 #include "GameManager.hpp"
 
 
+GameManager* GameManager::instance = nullptr;
+
+
 // ゲームに必要なオブジェクトを一通りまとめて生成する関数。
 void GameManager::GameStart()
 {
     player = new Player(0, 0, inGameRenderer);
-    orange = new Enemy_Cupsule_Orange(5, 5, inGameRenderer);
     background = new Background(inGameRenderer);
     aim = new Aim(inGameRenderer);
+    testButton = new Button({50, 50}, {200, 200}, 200, 200, 200, 255, inGameRenderer);
 }
 
 
@@ -20,32 +23,36 @@ void GameManager::Update()
     // 照準をマウスカーソルに追従させる。
     aim->ChaseMouse();
     
-    // 敵をプレイヤーに近づける。
-    orange->MoveToPlayer(player->GetPos());
+    // 敵をスポーンさせる
+    EnemyManager::Instance()->SpawnEnemy();
+
+    // 敵をプレイヤーに近づけさせる。
+    EnemyManager::Instance()->MoveEnemies(player->GetPos());
+
+    // 敵の当たり判定を判定させる。
+    EnemyManager::Instance()->CheckHitEnemiesToPlayer(player);
+    EnemyManager::Instance()->CheckHitEnemiesToBullets(&(BulletManager::Instance()->bullets));
     
-    // 敵がプレイヤーと当たったとき、敵をテレポートさせる。
-    // TODO. 当たり判定のテスト用なので、いずれ弾と当たったときの処理に書き換える。
-    if (orange->CheckHitRectToCircle(player->r, player->GetPos()))
-    {
-        orange->Teleport(10, 10);
-        player->TakeAttack();
-    }
-    
-    
+    // 弾を移動させる。
     BulletManager::Instance()->MoveBullets();
     
     /// キー入力の状態を見て、それに応じた処理を行う。
     /// 現時点で行っている処理->
-    ///         プレイヤーの移動に応じた敵の移動
-    ///         プレイヤーの移動に応じた背景の移動
-    ///         プレイヤーの移動に応じた弾の移動
+    ///         現時点でのゲーム内座標を一時保存する。
+    ///         ゲーム内座標を移動させる。
+    ///         if (ゲーム内座標が制限を超えたら)
+    ///             元の座標に戻す。
+    ///         else
+    ///             プレイヤーの移動に応じた敵の移動
+    ///             プレイヤーの移動に応じた背景の移動
+    ///             プレイヤーの移動に応じた弾の移動
     {
         // プレイヤーが斜め移動をするとき、移動量にルート2を割るフラグを渡す。
         bool divR2 = false;
         if ((KeyManager::Instance()->right || KeyManager::Instance()->left) && (KeyManager::Instance()->up || KeyManager::Instance()->down))
             divR2 = true;
         
-        
+        // 右移動
         if (KeyManager::Instance()->right)
         {
             Vector2 prevInGamePos = inGamePos;
@@ -57,12 +64,12 @@ void GameManager::Update()
             }
             else
             {
-                orange->Left(playerMoveSpeed, divR2);
+                EnemyManager::Instance()->LeftEnemies(playerMoveSpeed, divR2);
                 background->Left(playerMoveSpeed, divR2);
                 BulletManager::Instance()->LeftBullets(playerMoveSpeed, divR2);
             }
-            
         }
+        // 左移動
         if (KeyManager::Instance()->left)
         {
             Vector2 prevInGamePos = inGamePos;
@@ -74,11 +81,12 @@ void GameManager::Update()
             }
             else
             {
-                orange->Right(playerMoveSpeed, divR2);
+                EnemyManager::Instance()->RightEnemies(playerMoveSpeed, divR2);
                 background->Right(playerMoveSpeed, divR2);
                 BulletManager::Instance()->RightBullets(playerMoveSpeed, divR2);
             }
         }
+        // 上移動
         if (KeyManager::Instance()->up)
         {
             Vector2 prevInGamePos = inGamePos;
@@ -90,11 +98,12 @@ void GameManager::Update()
             }
             else
             {
-                orange->Down(playerMoveSpeed, divR2);
+                EnemyManager::Instance()->DownEnemies(playerMoveSpeed, divR2);
                 background->Down(playerMoveSpeed, divR2);
                 BulletManager::Instance()->DownBullets(playerMoveSpeed, divR2);
             }
         }
+        // 下移動
         if (KeyManager::Instance()->down)
         {
             Vector2 prevInGamePos = inGamePos;
@@ -106,7 +115,7 @@ void GameManager::Update()
             }
             else
             {
-                orange->Up(playerMoveSpeed, divR2);
+                EnemyManager::Instance()->UpEnemies(playerMoveSpeed, divR2);
                 background->Up(playerMoveSpeed, divR2);
                 BulletManager::Instance()->UpBullets(playerMoveSpeed, divR2);
             }
@@ -114,34 +123,21 @@ void GameManager::Update()
         if (KeyManager::Instance()->leftClick || KeyManager::Instance()->space)
         {
             BulletManager::Instance()->CreateBullet(player->GetPos(), aim->GetPos());
+            testButton->CheckClick();
         }
     }
 }
 
 
 // 描画をする関数。最後に描画したものほど前に来るため、描画順に注意。
-// 存在しないものを描画しないようにnullチェックを行っているが、不要かもしれない。
 void GameManager::Redraw()
 {
-    if (background != nullptr)
-    {
-        background->Redraw();
-    }
-    
-    if (orange != nullptr)
-    {
-        orange->Redraw();
-    }
-    
-    if (player != nullptr)
-    {
-        player->Redraw();
-    }
-    
-    if (aim != nullptr)
-    {
-        aim->Redraw();
-    }
-    
+    background->Redraw();
+    player->Redraw();
+    EnemyManager::Instance()->RedrawEnemies();
     BulletManager::Instance()->RedrawBullets();
+    aim->Redraw();
+    
+    testButton->Redraw();
+
 }

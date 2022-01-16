@@ -5,6 +5,9 @@
 
 class Enemy : public Sprite
 {
+private:
+    float moveSpeed = 0.2;
+    
 public:
     Enemy(int x, int y, string type, SDL_Renderer* targetRenderer) : Sprite(x, y, type, targetRenderer)
     {
@@ -12,6 +15,8 @@ public:
     }
     
     void MoveToPlayer(Vector2 targetPos);
+    
+    void Remake(int x, int y);
 };
 
 
