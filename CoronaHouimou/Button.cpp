@@ -8,9 +8,9 @@ bool Button::CheckClick()
         SDL_Point mouse_pos = {0, 0};
         SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
         
-        if (leftUp.x <= mouse_pos.x && mouse_pos.x <= leftUp.x + size.x)
+        if (px - w / 2 <= mouse_pos.x && mouse_pos.x <= px + w / 2)
         {
-            if (leftUp.y <= mouse_pos.y && mouse_pos.y <= leftUp.y + size.y)
+            if (py - h / 2 <= mouse_pos.y && mouse_pos.y <= py + h / 2)
             {
                 isActive = false;
                 return true;
@@ -25,8 +25,13 @@ void Button::Redraw()
 {
     if (isActive)
     {
-        SDL_SetRenderDrawColor(renderer, r, g, b, a);
-        SDL_Rect faceRect = {leftUp.x, leftUp.y, size.x, size.y};
-        SDL_RenderFillRect(renderer, &faceRect);
+        Vector2 reducSize = GetReducSize();
+        
+        SDL_Rect imageRect={0, 0, w, h};
+        SDL_Rect drawRect={px - reducSize.x / 2, py - reducSize.y / 2, reducSize.x, reducSize.y};
+        
+        SDL_RenderCopy(renderer, texture, &imageRect, &drawRect);
+
+        text->Redraw();
     }
 }

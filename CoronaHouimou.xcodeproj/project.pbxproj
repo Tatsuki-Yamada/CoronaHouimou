@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271FED2A2796BE84001BA880 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271FED282796BE84001BA880 /* Text.cpp */; };
+		271FED2D2796C94A001BA880 /* TextManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271FED2B2796C949001BA880 /* TextManager.cpp */; };
 		2725993A276CB9790008E5D2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27259939276CB9780008E5D2 /* main.cpp */; };
 		27259942276CBB400008E5D2 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27259941276CBB400008E5D2 /* libSDL2-2.0.0.dylib */; };
 		27259944276CBD150008E5D2 /* libSDL2_image-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27259943276CBD150008E5D2 /* libSDL2_image-2.0.0.dylib */; };
@@ -19,6 +21,7 @@
 		2726A5D227903495008092C1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5D027903495008092C1 /* Button.cpp */; };
 		2726A5D42790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2726A5D32790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib */; };
 		2726A5D72790B2D0008092C1 /* Title.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5D52790B2D0008092C1 /* Title.cpp */; };
+		2726A5DA27969F3C008092C1 /* Spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2726A5D827969F3C008092C1 /* Spawner.cpp */; };
 		275BF3192785B3CB000303C2 /* Aim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF3172785B3CB000303C2 /* Aim.cpp */; };
 		275BF31C2785B7AE000303C2 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF31A2785B7AE000303C2 /* GameManager.cpp */; };
 		275BF31F2785BEBB000303C2 /* KeyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF31D2785BEBB000303C2 /* KeyManager.cpp */; };
@@ -39,6 +42,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		271FED282796BE84001BA880 /* Text.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Text.cpp; sourceTree = "<group>"; };
+		271FED292796BE84001BA880 /* Text.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Text.hpp; sourceTree = "<group>"; };
+		271FED2B2796C949001BA880 /* TextManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextManager.cpp; sourceTree = "<group>"; };
+		271FED2C2796C949001BA880 /* TextManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextManager.hpp; sourceTree = "<group>"; };
 		27259936276CB9780008E5D2 /* CoronaHouimou */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CoronaHouimou; sourceTree = BUILT_PRODUCTS_DIR; };
 		27259939276CB9780008E5D2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		27259941276CBB400008E5D2 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../usr/local/Cellar/sdl2/2.0.16/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
@@ -60,6 +67,8 @@
 		2726A5D32790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_ttf-2.0.0.dylib"; path = "../../../../../usr/local/Cellar/sdl2_ttf/2.0.15/lib/libSDL2_ttf-2.0.0.dylib"; sourceTree = "<group>"; };
 		2726A5D52790B2D0008092C1 /* Title.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Title.cpp; sourceTree = "<group>"; };
 		2726A5D62790B2D0008092C1 /* Title.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Title.hpp; sourceTree = "<group>"; };
+		2726A5D827969F3C008092C1 /* Spawner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Spawner.cpp; sourceTree = "<group>"; };
+		2726A5D927969F3C008092C1 /* Spawner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Spawner.hpp; sourceTree = "<group>"; };
 		275BF3172785B3CB000303C2 /* Aim.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Aim.cpp; sourceTree = "<group>"; };
 		275BF3182785B3CB000303C2 /* Aim.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Aim.hpp; sourceTree = "<group>"; };
 		275BF31A2785B7AE000303C2 /* GameManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
@@ -107,6 +116,8 @@
 		27259938276CB9780008E5D2 /* CoronaHouimou */ = {
 			isa = PBXGroup;
 			children = (
+				271FED282796BE84001BA880 /* Text.cpp */,
+				271FED292796BE84001BA880 /* Text.hpp */,
 				27259939276CB9780008E5D2 /* main.cpp */,
 				2726A5D52790B2D0008092C1 /* Title.cpp */,
 				2726A5D62790B2D0008092C1 /* Title.hpp */,
@@ -135,6 +146,10 @@
 				2726A5CB27872F7F008092C1 /* BulletManager.hpp */,
 				2726A5CD278C327D008092C1 /* EnemyManager.cpp */,
 				2726A5CE278C327D008092C1 /* EnemyManager.hpp */,
+				2726A5D827969F3C008092C1 /* Spawner.cpp */,
+				2726A5D927969F3C008092C1 /* Spawner.hpp */,
+				271FED2B2796C949001BA880 /* TextManager.cpp */,
+				271FED2C2796C949001BA880 /* TextManager.hpp */,
 			);
 			path = CoronaHouimou;
 			sourceTree = "<group>";
@@ -206,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2726A5DA27969F3C008092C1 /* Spawner.cpp in Sources */,
 				2725994D27706ACD0008E5D2 /* Enemy.cpp in Sources */,
 				2726A5CC27872F7F008092C1 /* BulletManager.cpp in Sources */,
 				2726A5D72790B2D0008092C1 /* Title.cpp in Sources */,
@@ -219,6 +235,8 @@
 				275BF31C2785B7AE000303C2 /* GameManager.cpp in Sources */,
 				27C2B7782778981100B0E643 /* Enemy_Cupsule_Orange.cpp in Sources */,
 				2726A5CF278C327D008092C1 /* EnemyManager.cpp in Sources */,
+				271FED2A2796BE84001BA880 /* Text.cpp in Sources */,
+				271FED2D2796C94A001BA880 /* TextManager.cpp in Sources */,
 				2725994A277069DB0008E5D2 /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

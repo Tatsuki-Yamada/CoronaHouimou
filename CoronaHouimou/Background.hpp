@@ -7,13 +7,13 @@
 class Background : public Sprite
 {
 public:
-    Background(SDL_Renderer* targetRenderer) : Sprite(0, 0, "Background", targetRenderer)
+    Background(SDL_Renderer* targetRenderer) : Sprite(320, 240, "Background", targetRenderer)
     {
-        SetReducRatio(2.0);
-        SetPosToCenter();
+        SetReducRatio(2.5);
+        //SetPosToCenter();
     }
     
-    void Redraw();
+    //void Redraw();
 };
 
 #endif /* Background_hpp */

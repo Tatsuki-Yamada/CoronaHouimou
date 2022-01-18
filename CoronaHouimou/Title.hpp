@@ -3,15 +3,14 @@
 
 #include <iostream>
 #include <SDL2/SDL_ttf.h>
+#include "Text.hpp"
 
 
 
 class Title
 {
 private:
-    TTF_Font* font;
-    SDL_Surface *surface;
-    SDL_Texture *texture;
+    Text* nameText;
     
     SDL_Renderer* renderer;
     
@@ -20,12 +19,7 @@ public:
     {
         renderer = targetRenderer;
 
-        font = TTF_OpenFont("Fonts/komorebi-gothic.ttf", 40);
-        
-        if (!font)
-        {
-            std::cout << "font load error." << std::endl;
-        }
+        nameText = new Text(200, 200, "コロナ包囲網", 40, targetRenderer, {255, 255, 255, 255});
     }
     
     void Redraw();

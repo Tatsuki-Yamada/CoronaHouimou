@@ -18,13 +18,13 @@ private:
     static BulletManager* instance;          // Singleton化のため、一度生成したインスタンスを保存する変数。
     
     int lastShotTime = 0;         // 連射のインターバルのため、最後に弾を撃った時間を保存する変数。
-    int shotInterval = 500;           // 連射のインターバルを設定する変数。ミリ秒単位。
     
 public:
     SDL_Renderer* inGameRenderer = nullptr;
     
     std::vector<Bullet*> bullets;
-    
+    int shotInterval = 500;           // 連射のインターバルを設定する変数。ミリ秒単位。
+
     
     void CreateBullet(Vector2 startPos, Vector2 targetPos);
     void RedrawBullets();

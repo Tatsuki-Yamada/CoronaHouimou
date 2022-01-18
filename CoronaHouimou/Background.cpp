@@ -1,6 +1,6 @@
 #include "Background.hpp"
 
-
+/*
 void Background::Redraw()
 {
     Vector2 reducSize = GetReducSize();
@@ -21,3 +21,4 @@ void Background::Redraw()
     }
     
 }
+*/

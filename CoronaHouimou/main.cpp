@@ -61,6 +61,10 @@ int main(int argc, const char * argv[])
     BulletManager::Instance()->inGameRenderer = mainRenderer;
     
     EnemyManager::Instance()->inGameRenderer = mainRenderer;
+    EnemyManager::Instance()->CreateSpawners();
+    
+    TextManager::Instance()->inGameRenderer = mainRenderer;
+    TextManager::Instance()->Init();
     
     // フレームレートを調整する為の変数を生成する。
     int prevFrameEndTime = 0, nowFrameStartTime;
@@ -132,6 +136,12 @@ int main(int argc, const char * argv[])
         // フレームレート固定のため、フレームの処理がすべて終了した時間を記録する
         prevFrameEndTime = SDL_GetTicks();
     }
+    
+    delete KeyManager::Instance();
+    delete GameManager::Instance();
+    delete BulletManager::Instance();
+    delete EnemyManager::Instance();
+    delete TextManager::Instance();
     
     return 0;
 }

@@ -4,24 +4,24 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include "Sprite.hpp"
+#include "Text.hpp"
 
 
-class Button
+class Button : public Sprite
 {
 private:
-    Vector2 leftUp;
-    Vector2 size;
-    int r, g, b, a;
-    bool isActive = true;
+    Text* text;
     
 public:
     SDL_Renderer* renderer = nullptr;
     
-    Button(Vector2 lu, Vector2 wh, int r, int g, int b, int a, SDL_Renderer* targetRenderer)
+    bool isActive = false;
+
+    
+    Button(Vector2 pos, const char* buttonType, const char* str, SDL_Renderer* targetRenderer) : Sprite(pos.x, pos.y, buttonType, targetRenderer)
     {
-        leftUp = lu;
-        size = wh;
         renderer = targetRenderer;
+        text = new Text(pos.x, pos.y, str, 20, targetRenderer);
     }
     
     bool CheckClick();

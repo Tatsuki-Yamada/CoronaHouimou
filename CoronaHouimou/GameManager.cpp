@@ -10,7 +10,10 @@ void GameManager::GameStart()
     player = new Player(0, 0, inGameRenderer);
     background = new Background(inGameRenderer);
     aim = new Aim(inGameRenderer);
-    testButton = new Button({50, 50}, {200, 200}, 200, 200, 200, 255, inGameRenderer);
+    attackUpButton = new Button({320, 100}, "Button_Rect_Red", "攻撃力上昇", inGameRenderer);
+    moveUpButton = new Button({178, 380}, "Button_Rect_Green", "移動速度上昇", inGameRenderer);
+    shotSpeedUpButton = new Button({462, 380}, "Button_Rect_Blue", "連射速度上昇", inGameRenderer);
+
 }
 
 
@@ -22,36 +25,48 @@ void GameManager::Update()
     
     // 照準をマウスカーソルに追従させる。
     aim->ChaseMouse();
-    
-    // 敵をスポーンさせる
-    EnemyManager::Instance()->SpawnEnemy();
-
-    // 敵をプレイヤーに近づけさせる。
-    EnemyManager::Instance()->MoveEnemies(player->GetPos());
-
-    // 敵の当たり判定を判定させる。
-    EnemyManager::Instance()->CheckHitEnemiesToPlayer(player);
-    EnemyManager::Instance()->CheckHitEnemiesToBullets(&(BulletManager::Instance()->bullets));
-    
-    // 弾を移動させる。
-    BulletManager::Instance()->MoveBullets();
-    
-    /// キー入力の状態を見て、それに応じた処理を行う。
-    /// 現時点で行っている処理->
-    ///         現時点でのゲーム内座標を一時保存する。
-    ///         ゲーム内座標を移動させる。
-    ///         if (ゲーム内座標が制限を超えたら)
-    ///             元の座標に戻す。
-    ///         else
-    ///             プレイヤーの移動に応じた敵の移動
-    ///             プレイヤーの移動に応じた背景の移動
-    ///             プレイヤーの移動に応じた弾の移動
+        
+    // 敵が全滅していなければ
+    if (isAttacking)
     {
+        // 敵をスポーンさせる
+        EnemyManager::Instance()->SpawnEnemy();
+
+        // 敵をプレイヤーに近づけさせる。
+        EnemyManager::Instance()->MoveEnemies(player->GetPos());
+
+        // 敵の当たり判定を判定させる。
+        EnemyManager::Instance()->CheckHitEnemiesToPlayer(player);
+        EnemyManager::Instance()->CheckHitEnemiesToBullets(&(BulletManager::Instance()->bullets));
+        
+        // 敵を全滅させたときの処理をする。
+        if (EnemyManager::Instance()->CheckWaveComplete())
+        {
+            attackUpButton->isActive = true;
+            moveUpButton->isActive = true;
+            shotSpeedUpButton->isActive = true;
+            isAttacking = false;
+        }
+        
+        // 弾を移動させる。
+        BulletManager::Instance()->MoveBullets();
+        
+        /// キー入力の状態を見て、それに応じた処理を行う。
+        /// 現時点で行っている処理->
+        ///         現時点でのゲーム内座標を一時保存する。
+        ///         ゲーム内座標を移動させる。
+        ///         if (ゲーム内座標が制限を超えたら)
+        ///             元の座標に戻す。
+        ///         else
+        ///             プレイヤーの移動に応じた敵の移動
+        ///             プレイヤーの移動に応じた背景の移動
+        ///             プレイヤーの移動に応じた弾の移動
+        
         // プレイヤーが斜め移動をするとき、移動量にルート2を割るフラグを渡す。
         bool divR2 = false;
         if ((KeyManager::Instance()->right || KeyManager::Instance()->left) && (KeyManager::Instance()->up || KeyManager::Instance()->down))
             divR2 = true;
-        
+                
         // 右移動
         if (KeyManager::Instance()->right)
         {
@@ -123,7 +138,28 @@ void GameManager::Update()
         if (KeyManager::Instance()->leftClick || KeyManager::Instance()->space)
         {
             BulletManager::Instance()->CreateBullet(player->GetPos(), aim->GetPos());
-            testButton->CheckClick();
+        }
+    }
+    else
+    {
+        if (KeyManager::Instance()->leftClick)
+        {
+            if (attackUpButton->CheckClick())
+            {
+                playerAttackPower += 1;
+                
+                WaveStart();
+            }
+            else if(moveUpButton->CheckClick())
+            {
+                playerMoveSpeed += 1;
+                WaveStart();
+            }
+            else if (shotSpeedUpButton->CheckClick())
+            {
+                BulletManager::Instance()->shotInterval -= 50;
+                WaveStart();
+            }
         }
     }
 }
@@ -133,11 +169,39 @@ void GameManager::Update()
 void GameManager::Redraw()
 {
     background->Redraw();
+    EnemyManager::Instance()->RedrawSpawners();
     player->Redraw();
-    EnemyManager::Instance()->RedrawEnemies();
-    BulletManager::Instance()->RedrawBullets();
+
+    
+    if (isAttacking)
+    {
+        EnemyManager::Instance()->RedrawEnemies();
+        BulletManager::Instance()->RedrawBullets();
+    }
+    else
+    {
+        attackUpButton->Redraw();
+        moveUpButton->Redraw();
+        shotSpeedUpButton->Redraw();
+    }
+    
     aim->Redraw();
     
-    testButton->Redraw();
+    TextManager::Instance()->Redraw();
 
+}
+
+
+void GameManager::AddScore(int s)
+{
+    score += s;
+}
+
+
+void GameManager::WaveStart()
+{
+    EnemyManager::Instance()->WaveStart();
+    enemyDefaultHP++;
+    
+    isAttacking = true;
 }

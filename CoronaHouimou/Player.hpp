@@ -12,6 +12,7 @@ private:
     
 public:
     int r;
+
     
     Player(int x, int y, SDL_Renderer* targetRenderer) : Sprite(x, y, "Player", targetRenderer)
     {
