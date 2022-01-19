@@ -33,6 +33,7 @@ public:
     void LeftBullets(int v, bool divR2 = false);
     void UpBullets(int v, bool divR2 = false);
     void DownBullets(int v, bool divR2 = false);
+    void Reset();
     
     // Singleton化しているので、呼び出しのための中継を行う関数。
     static BulletManager* Instance()

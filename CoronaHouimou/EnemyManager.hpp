@@ -18,7 +18,6 @@ private:
     int lastSpawnTime = 0;
     int spawnInterval = 2000;
     int spawnCount = 0;
-    int spawnLimit = 10;
     Spawner* spawners[8];
     int basePos = 1000;
     Vector2 spawnPoint[8] = {
@@ -36,6 +35,8 @@ public:
     SDL_Renderer* inGameRenderer = nullptr;
     
     std::vector<Enemy_Cupsule_Orange*> enemies;
+    int spawnLimit = 10;
+
     
     void MoveEnemies(Vector2 playerPos);
     void SpawnEnemy();
@@ -50,6 +51,7 @@ public:
     void WaveStart();
     void RedrawSpawners();
     void CreateSpawners();
+    void Reset();
     
     
     // Singleton化しているので、呼び出しのための中継を行う関数。

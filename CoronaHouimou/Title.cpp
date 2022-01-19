@@ -3,7 +3,8 @@
 
 void Title::Redraw()
 {
+    SDL_RenderClear(renderer);
+    titleText->Redraw();
     nameText->Redraw();
-    //windowにレンダリングする
     SDL_RenderPresent(renderer);
 }

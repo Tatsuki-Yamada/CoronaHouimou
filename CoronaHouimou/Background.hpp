@@ -10,10 +10,10 @@ public:
     Background(SDL_Renderer* targetRenderer) : Sprite(320, 240, "Background", targetRenderer)
     {
         SetReducRatio(2.5);
-        //SetPosToCenter();
+        SetPosToCenter();
     }
     
-    //void Redraw();
+    void Redraw();
 };
 
 #endif /* Background_hpp */

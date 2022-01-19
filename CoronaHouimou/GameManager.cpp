@@ -1,4 +1,5 @@
 #include "GameManager.hpp"
+#include <string>
 
 
 GameManager* GameManager::instance = nullptr;
@@ -44,7 +45,11 @@ void GameManager::Update()
         {
             attackUpButton->isActive = true;
             moveUpButton->isActive = true;
-            shotSpeedUpButton->isActive = true;
+            
+            if (BulletManager::Instance()->shotInterval >= 51)
+            {
+                shotSpeedUpButton->isActive = true;
+            }
             isAttacking = false;
         }
         
@@ -135,7 +140,7 @@ void GameManager::Update()
                 BulletManager::Instance()->UpBullets(playerMoveSpeed, divR2);
             }
         }
-        if (KeyManager::Instance()->leftClick || KeyManager::Instance()->space)
+        if (KeyManager::Instance()->space)
         {
             BulletManager::Instance()->CreateBullet(player->GetPos(), aim->GetPos());
         }
@@ -146,7 +151,7 @@ void GameManager::Update()
         {
             if (attackUpButton->CheckClick())
             {
-                playerAttackPower += 1;
+                playerAttackPower *= 1.3;
                 
                 WaveStart();
             }
@@ -157,7 +162,7 @@ void GameManager::Update()
             }
             else if (shotSpeedUpButton->CheckClick())
             {
-                BulletManager::Instance()->shotInterval -= 50;
+                BulletManager::Instance()->shotInterval /= 1.3;
                 WaveStart();
             }
         }
@@ -194,14 +199,30 @@ void GameManager::Redraw()
 
 void GameManager::AddScore(int s)
 {
-    score += s;
+    score += s * playerAttackPower;
+    TextManager::Instance()->InfoUpdate();
 }
 
 
 void GameManager::WaveStart()
 {
     EnemyManager::Instance()->WaveStart();
-    enemyDefaultHP++;
+    enemyDefaultHP *= 1.5;
+    enemyCount = EnemyManager::Instance()->spawnLimit;
+    TextManager::Instance()->InfoUpdate();
     
     isAttacking = true;
+}
+
+
+void GameManager::Reset()
+{
+    playerMoveSpeed = 3;
+    playerAttackPower = 10;
+    playerHP = 5;
+    enemyDefaultHP = 10;
+    enemyCount = 10;
+    inGamePos = {0, 0};
+    score = 0;
+    background->Teleport(320, 240);
 }

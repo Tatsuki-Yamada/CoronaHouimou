@@ -27,6 +27,8 @@
 		275BF31F2785BEBB000303C2 /* KeyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275BF31D2785BEBB000303C2 /* KeyManager.cpp */; };
 		27C2B7782778981100B0E643 /* Enemy_Cupsule_Orange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C2B7762778981100B0E643 /* Enemy_Cupsule_Orange.cpp */; };
 		27C2B77C2778B0FC00B0E643 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C2B77A2778B0FC00B0E643 /* Background.cpp */; };
+		27CA9BCC2797322E00812B4B /* Result.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CA9BCA2797322E00812B4B /* Result.cpp */; };
+		27CA9BCF279744B900812B4B /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CA9BCD279744B900812B4B /* Tutorial.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,6 +82,10 @@
 		27C2B7792778B00400B0E643 /* Credits.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Credits.txt; sourceTree = "<group>"; };
 		27C2B77A2778B0FC00B0E643 /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
 		27C2B77B2778B0FC00B0E643 /* Background.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Background.hpp; sourceTree = "<group>"; };
+		27CA9BCA2797322E00812B4B /* Result.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Result.cpp; sourceTree = "<group>"; };
+		27CA9BCB2797322E00812B4B /* Result.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Result.hpp; sourceTree = "<group>"; };
+		27CA9BCD279744B900812B4B /* Tutorial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
+		27CA9BCE279744B900812B4B /* Tutorial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +156,10 @@
 				2726A5D927969F3C008092C1 /* Spawner.hpp */,
 				271FED2B2796C949001BA880 /* TextManager.cpp */,
 				271FED2C2796C949001BA880 /* TextManager.hpp */,
+				27CA9BCA2797322E00812B4B /* Result.cpp */,
+				27CA9BCB2797322E00812B4B /* Result.hpp */,
+				27CA9BCD279744B900812B4B /* Tutorial.cpp */,
+				27CA9BCE279744B900812B4B /* Tutorial.hpp */,
 			);
 			path = CoronaHouimou;
 			sourceTree = "<group>";
@@ -221,6 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27CA9BCF279744B900812B4B /* Tutorial.cpp in Sources */,
 				2726A5DA27969F3C008092C1 /* Spawner.cpp in Sources */,
 				2725994D27706ACD0008E5D2 /* Enemy.cpp in Sources */,
 				2726A5CC27872F7F008092C1 /* BulletManager.cpp in Sources */,
@@ -235,6 +246,7 @@
 				275BF31C2785B7AE000303C2 /* GameManager.cpp in Sources */,
 				27C2B7782778981100B0E643 /* Enemy_Cupsule_Orange.cpp in Sources */,
 				2726A5CF278C327D008092C1 /* EnemyManager.cpp in Sources */,
+				27CA9BCC2797322E00812B4B /* Result.cpp in Sources */,
 				271FED2A2796BE84001BA880 /* Text.cpp in Sources */,
 				271FED2D2796C94A001BA880 /* TextManager.cpp in Sources */,
 				2725994A277069DB0008E5D2 /* Player.cpp in Sources */,

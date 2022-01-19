@@ -4,7 +4,7 @@
 void Text::Redraw()
 {
     //TTF_SetFontOutline(font, 1);//枠抜きで描写するとき
-    surface = TTF_RenderUTF8_Blended(font, strings, fontColor);
+    surface = TTF_RenderUTF8_Blended(font, strings.c_str(), fontColor);
 
     //surfaceからTextureを作る
     texture = SDL_CreateTextureFromSurface(renderer, surface);

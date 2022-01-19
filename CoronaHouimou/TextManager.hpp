@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "SDL2/SDL.h"
 #include "Text.hpp"
+#include "string"
+#include "GameManager.hpp"
 
 
 class TextManager
@@ -15,9 +17,12 @@ private:
 public:
     SDL_Renderer* inGameRenderer;
     Text* scoreText;
+    Text* enemyCountText;
+    Text* lifeText;
     
     void Init();
     void Redraw();
+    void InfoUpdate();
     
     // Singleton化しているので、呼び出しのための中継を行う関数。
     static TextManager* Instance()

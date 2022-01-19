@@ -1,9 +1,10 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-
 #include "GameManager.hpp"
 #include "Title.hpp"
+#include "Tutorial.hpp"
+#include "Result.hpp"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ SDL_Renderer* mainRenderer = NULL;
 enum WindowState
 {
     TitleWindow,
+    TutorialWindow,
     InGame,
     ResultWindow
 };
@@ -49,8 +51,10 @@ int main(int argc, const char * argv[])
     if (!Init())
         return -1;
 
-    // タイトル画面を表示するオブジェクトを生成する。
+    // 各画面のオブジェクトを生成する。
     Title* title = new Title(mainRenderer);
+    Tutorial* tutorial = new Tutorial(mainRenderer);
+    Result* result = new Result(mainRenderer);
 
     
     // ゲームマネージャーを生成する。
@@ -110,8 +114,17 @@ int main(int argc, const char * argv[])
                 title->Redraw();
                 
                 if (KeyManager::Instance()->leftClick)
-                    windowState = InGame;
+                    windowState = TutorialWindow;
 
+                break;
+                
+            //チュートリアル画面
+            case TutorialWindow:
+                tutorial->Redraw();
+                
+                if (KeyManager::Instance()->space)
+                    windowState = InGame;
+                
                 break;
                 
             // ゲーム中
@@ -124,11 +137,26 @@ int main(int argc, const char * argv[])
                 GameManager::Instance()->Redraw();
                 SDL_RenderPresent(mainRenderer);
                 
+                if (GameManager::Instance()->playerHP <= 0)
+                {
+                    result->InfoUpdate();
+                    windowState = ResultWindow;
+                }
 
                 break;
                 
             // リザルト画面
             case ResultWindow:
+                result->Redraw();
+                
+                if (KeyManager::Instance()->enter)
+                {
+                    windowState = TitleWindow;
+                    GameManager::Instance()->Reset();
+                    BulletManager::Instance()->Reset();
+                    EnemyManager::Instance()->Reset();
+                    TextManager::Instance()->InfoUpdate();
+                }
                 break;
                 
         }

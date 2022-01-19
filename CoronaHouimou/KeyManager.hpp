@@ -15,7 +15,7 @@ class KeyManager
     static KeyManager* instance;          // Singleton化のため、一度生成したインスタンスを保存する変数。
     
 public:
-    bool right, left, up, down, space = false;         // キー入力があれば対応した変数がtrueになる。
+    bool right, left, up, down, space, enter = false;         // キー入力があれば対応した変数がtrueになる。
     bool leftClick = false;         // クリック入力があれば対応した変数がtrueになる。
 
 

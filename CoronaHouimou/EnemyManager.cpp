@@ -2,6 +2,7 @@
 #include "GameManager.hpp"
 
 
+
 EnemyManager* EnemyManager::instance = nullptr;
 
 
@@ -9,7 +10,7 @@ void EnemyManager::SpawnEnemy()
 {
     if (spawnCount < spawnLimit)
     {
-        // 今フレームの時間を取得し、最後に弾を撃ったフレームからインターバル秒以上の間隔があれば敵を生成する。
+        // 今フレームの時間を取得し、最後に敵を出したフレームからインターバル秒以上の間隔があれば敵を生成する。
         if (SDL_GetTicks() - lastSpawnTime > spawnInterval)
         {
             Vector2 inGamePos = GameManager::Instance()->inGamePos;
@@ -18,7 +19,7 @@ void EnemyManager::SpawnEnemy()
             spawnPos.x += -inGamePos.x + 320;
             spawnPos.y += -inGamePos.y + 240;
             
-            // 配列内に無効状態の弾があればそれを再度有効化して終わる。
+            // 配列内に無効状態の敵があればそれを再度有効化して終わる。
             for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
             {
                 if (!(*enemyItr)->isActive)
@@ -158,8 +159,6 @@ void EnemyManager::CheckHitEnemiesToBullets(std::vector<Bullet*>* bullets)
     {
         for (auto bulletItr = bullets->begin(); bulletItr != bullets->end();)
         {
-            // 敵がプレイヤーと当たったとき、敵をテレポートさせる。
-            // TODO. 敵のテレポートを別の処理に置き換える。
             if ((*enemyItr)->CheckHitRectToCircle((*bulletItr)->r, (*bulletItr)->GetPos()))
             {
                 (*enemyItr)->TakeDamage(GameManager::Instance()->playerAttackPower);
@@ -226,4 +225,12 @@ void EnemyManager::CreateSpawners()
         spawners[i] = s;
     }
      */
+}
+
+
+void EnemyManager::Reset()
+{
+    spawnInterval = 2000;
+    spawnCount = 0;
+    enemies = {};
 }

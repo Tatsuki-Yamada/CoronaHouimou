@@ -32,6 +32,9 @@ void KeyManager::KeyCheck(SDL_Event e)
                 case SDLK_SPACE:
                     space = true;
                     break;
+                case SDLK_RETURN:
+                    enter = true;
+                    break;
             }
             break;
             
@@ -57,6 +60,10 @@ void KeyManager::KeyCheck(SDL_Event e)
                     break;
                 case SDLK_SPACE:
                     space = false;
+                    break;
+                case SDLK_RETURN:
+                    enter = false;
+                    break;
             }
             break;
 

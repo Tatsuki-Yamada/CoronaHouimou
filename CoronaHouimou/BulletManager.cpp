@@ -86,3 +86,10 @@ void BulletManager::DownBullets(int d, bool divR2)
         ++bulletItr;
     }
 }
+
+
+void BulletManager::Reset()
+{
+    shotInterval = 500;
+    bullets = {};
+}

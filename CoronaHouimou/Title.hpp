@@ -10,6 +10,7 @@
 class Title
 {
 private:
+    Text* titleText;
     Text* nameText;
     
     SDL_Renderer* renderer;
@@ -19,7 +20,8 @@ public:
     {
         renderer = targetRenderer;
 
-        nameText = new Text(200, 200, "コロナ包囲網", 40, targetRenderer, {255, 255, 255, 255});
+        titleText = new Text(200, 200, "コロナ包囲網", 40, targetRenderer, {255, 255, 255, 255});
+        nameText = new Text(300, 350, "山田 竜暉", 30, targetRenderer, {255, 255, 255, 255});
     }
     
     void Redraw();

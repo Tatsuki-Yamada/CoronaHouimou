@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "GameManager.hpp"
 
 
 void Player::Redraw()
@@ -15,9 +16,7 @@ void Player::Redraw()
 
 void Player::TakeAttack()
 {
-    hp -= 1;
-    if (hp <= 0)
-    {
-
-    }
+    GameManager::Instance()->playerHP--;
+    GameManager::Instance()->enemyCount--;
+    TextManager::Instance()->InfoUpdate();
 }

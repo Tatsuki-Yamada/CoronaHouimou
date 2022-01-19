@@ -39,8 +39,10 @@ public:
     
     
     int playerMoveSpeed = 3;            // プレイヤーの移動速度。この数字に応じて背景や敵などのオブジェクトを移動させる。
-    int playerAttackPower = 1;          // プレイヤーの攻撃力。
-    int enemyDefaultHP = 1;         // 敵のこのWaveでの最大HP
+    int playerAttackPower = 10;          // プレイヤーの攻撃力。
+    int playerHP = 5;           // プレイヤーのHP。
+    int enemyDefaultHP = 10;         // 敵のこのWaveでの最大HP
+    int enemyCount = 10;
     Vector2 inGamePos = {0, 0};         // プレイヤーのゲーム内座標。
     int moveLimit = 700;           // プレイヤーのゲーム内座標の移動限界値。この数値の正方形フィールドから出られない。
     int score = 0;          // 獲得したスコア。
@@ -50,7 +52,7 @@ public:
     void Redraw();
     void AddScore(int s);
     void WaveStart();
-    
+    void Reset();
     
     // Singleton化しているので、呼び出しのための中継を行う関数。
     static GameManager* Instance()

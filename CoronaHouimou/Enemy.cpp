@@ -40,5 +40,9 @@ void Enemy::TakeDamage(int d)
     hp -= d;
     
     if (hp <= 0)
+    {
+        GameManager::Instance()->enemyCount--;
         isActive = false;
+
+    }
 }

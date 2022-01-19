@@ -21,7 +21,7 @@ public:
     Button(Vector2 pos, const char* buttonType, const char* str, SDL_Renderer* targetRenderer) : Sprite(pos.x, pos.y, buttonType, targetRenderer)
     {
         renderer = targetRenderer;
-        text = new Text(pos.x, pos.y, str, 20, targetRenderer);
+        text = new Text(pos.x - w / 4, pos.y, str, 20, targetRenderer, {255, 255, 255, 255});
     }
     
     bool CheckClick();
