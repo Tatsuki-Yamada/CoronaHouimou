@@ -32,7 +32,6 @@ public:
     
     Vector2 GetReducSize();
     Vector2 GetPos();
-    void SetReducRatio(float ratio);
     void SetPosToCenter();
     void Redraw();
     void Teleport(int x, int y);
@@ -40,8 +39,6 @@ public:
     void Left(int d, bool divR2 = false);
     void Up(int d, bool divR2 = false);
     void Down(int d, bool divR2 = false);
-    bool CheckHitRectToCircle(int r, Vector2 CenterPos);
-    void ChaseMouse();
 };
 
 

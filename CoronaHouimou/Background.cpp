@@ -1,6 +1,15 @@
 #include "Background.hpp"
 
 
+// コンストラクタ。
+Background::Background(SDL_Renderer* targetRenderer) : Sprite(320, 240, "Background", targetRenderer)
+{
+    reducRatio = 2.5;
+    SetPosToCenter();
+}
+
+
+//
 void Background::Redraw()
 {
     Vector2 reducSize = GetReducSize();

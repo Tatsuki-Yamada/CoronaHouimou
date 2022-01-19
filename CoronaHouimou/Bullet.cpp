@@ -2,7 +2,21 @@
 #include "GameManager.hpp"
 
 
-void Bullet::Remake(Vector2 startPos, Vector2 targetPos)
+//コンストラクタ。
+Bullet::Bullet(Vector2 startPos, Vector2 targetPos, SDL_Renderer* targetRenderer) : Sprite(startPos.x, startPos.y, "PlayerBullet", targetRenderer)
+{
+    reducRatio = 0.1;
+    
+    double rad = atan2(targetPos.y - startPos.y, targetPos.x - startPos.x);
+    moveVec.x = cos(rad) * moveSpeed * 10;          // あまりにも遅いと型の問題で速度が0になるため、10倍した値を基準にしている。
+    moveVec.y = sin(rad) * moveSpeed * 10;
+    
+    r = GetReducSize().x / 2;
+}
+
+
+// 初期化処理をまとめた関数。
+void Bullet::Init(Vector2 startPos, Vector2 targetPos)
 {
     px = startPos.x;
     py = startPos.y;
@@ -15,6 +29,7 @@ void Bullet::Remake(Vector2 startPos, Vector2 targetPos)
 }
 
 
+// moveVec分移動する関数。
 void Bullet::Move()
 {
     if (isActive)

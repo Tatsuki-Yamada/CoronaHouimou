@@ -1,6 +1,7 @@
 #include "Sprite.hpp"
 
 
+// コンストラクタ。
 Sprite::Sprite(int x, int y, string imageName, SDL_Renderer* targetRenderer)
 {
     renderer = targetRenderer;
@@ -42,12 +43,6 @@ Vector2 Sprite::GetPos()
 {
     Vector2 v = {px, py};
     return v;
-}
-
-
-void Sprite::SetReducRatio(float ratio)
-{
-    reducRatio = ratio;
 }
 
 
@@ -116,35 +111,4 @@ void Sprite::Up(int d, bool divR2)
 void Sprite::Down(int d, bool divR2)
 {
     Up(-d, divR2);
-}
-
-
-// 長方形側のオブジェクトから見て円側のオブジェクトが当たっているかの判定
-bool Sprite::CheckHitRectToCircle(int r, Vector2 centerPos)
-{
-    Vector2 reducSize = GetReducSize();
-    float rootedR = r / sqrt(2);
-    
-    Vector2 extendLeftUp = {int(px - reducSize.x / 2 - rootedR), int(py - reducSize.y / 2 - rootedR)};
-    Vector2 extendRightDown = {int(px + reducSize.x / 2 + rootedR), int(py + reducSize.y / 2 + rootedR)};
-    
-    if (extendLeftUp.x <= centerPos.x && centerPos.x <= extendRightDown.x)
-    {
-        if (extendLeftUp.y <= centerPos.y && centerPos.y <= extendRightDown.y)
-        {
-            return true;
-        }
-    }
-    
-    return false;
-}
-
-
-// オブジェクトがマウスに追従する関数
-void Sprite::ChaseMouse()
-{
-    SDL_Point mouse_pos = {0, 0};
-    SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
-    
-    px = mouse_pos.x; py = mouse_pos.y;
 }

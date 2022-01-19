@@ -15,7 +15,7 @@ void BulletManager::CreateBullet(Vector2 startPos, Vector2 targetPos)
         {
             if (!(*bulletItr)->isActive)
             {
-                (*bulletItr)->Remake(startPos, targetPos);
+                (*bulletItr)->Init(startPos, targetPos);
                 lastShotTime = SDL_GetTicks();
                 return;
             }

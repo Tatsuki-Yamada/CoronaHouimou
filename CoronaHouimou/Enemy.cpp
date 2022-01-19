@@ -2,14 +2,26 @@
 #include "GameManager.hpp"
 
 
+// コンストラクタ。
 Enemy::Enemy(int x, int y, string type, SDL_Renderer* targetRenderer) : Sprite(x, y, type, targetRenderer)
 {
-    SetReducRatio(0.2);
-    hp = GameManager::Instance()->enemyDefaultHP;
+    Init(x, y);
 }
 
 
-void Enemy::MoveToPlayer(Vector2 targetPos)
+// 初期化処理をまとめた関数。
+void Enemy::Init(int x, int y)
+{
+    px = x;
+    py = y;
+    hp = GameManager::Instance()->enemyDefaultHP;
+    
+    isActive = true;
+}
+
+
+// 引数の座標に向かって移動する関数。
+void Enemy::MoveTo(Vector2 targetPos)
 {
     if (isActive)
     {
@@ -24,17 +36,7 @@ void Enemy::MoveToPlayer(Vector2 targetPos)
 }
     
 
-
-void Enemy::Remake(int x, int y)
-{
-    px = x;
-    py = y;
-    hp = GameManager::Instance()->enemyDefaultHP;
-    
-    isActive = true;
-}
-
-
+// ダメージを受ける処理をする関数。
 void Enemy::TakeDamage(int d)
 {
     hp -= d;
@@ -43,6 +45,26 @@ void Enemy::TakeDamage(int d)
     {
         GameManager::Instance()->enemyCount--;
         isActive = false;
-
     }
+}
+
+
+// 短形のオブジェクトから見て、円のオブジェクトが当たっているかの判定
+bool Enemy::CheckHitToCircle(int r, Vector2 centerPos)
+{
+    Vector2 reducSize = GetReducSize();
+    float rootedR = r / sqrt(2);
+    
+    Vector2 extendLeftUp = {int(px - reducSize.x / 2 - rootedR), int(py - reducSize.y / 2 - rootedR)};
+    Vector2 extendRightDown = {int(px + reducSize.x / 2 + rootedR), int(py + reducSize.y / 2 + rootedR)};
+    
+    if (extendLeftUp.x <= centerPos.x && centerPos.x <= extendRightDown.x)
+    {
+        if (extendLeftUp.y <= centerPos.y && centerPos.y <= extendRightDown.y)
+        {
+            return true;
+        }
+    }
+    
+    return false;
 }

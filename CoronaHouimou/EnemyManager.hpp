@@ -1,13 +1,10 @@
 #ifndef EnemyManager_hpp
 #define EnemyManager_hpp
 
-#include <stdio.h>
 #include <vector>
 #include "Enemy_Cupsule_Orange.hpp"
 #include "Player.hpp"
 #include "Bullet.hpp"
-#include "Spawner.hpp"
-
 
 
 class EnemyManager
@@ -18,7 +15,6 @@ private:
     int lastSpawnTime = 0;
     int spawnInterval = 2000;
     int spawnCount = 0;
-    Spawner* spawners[8];
     int basePos = 1000;
     Vector2 spawnPoint[8] = {
         {-basePos, -basePos},

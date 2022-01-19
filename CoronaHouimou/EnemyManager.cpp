@@ -24,7 +24,7 @@ void EnemyManager::SpawnEnemy()
             {
                 if (!(*enemyItr)->isActive)
                 {
-                    (*enemyItr)->Remake(spawnPos.x, spawnPos.y);
+                    (*enemyItr)->Init(spawnPos.x, spawnPos.y);
                     lastSpawnTime = SDL_GetTicks();
                     spawnCount++;
 
@@ -46,7 +46,7 @@ void EnemyManager::MoveEnemies(Vector2 playerPos)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
     {
-        (*enemyItr)->MoveToPlayer(playerPos);
+        (*enemyItr)->MoveTo(playerPos);
         
         ++enemyItr;
     }
@@ -141,11 +141,12 @@ void EnemyManager::CheckHitEnemiesToPlayer(Player* player)
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
     {
         // 敵がプレイヤーと当たったとき、敵をテレポートさせる。
-        // TODO. 敵のテレポートを別の処理に置き換える。
-        if ((*enemyItr)->CheckHitRectToCircle(player->r, player->GetPos()))
+        if ((*enemyItr)->CheckHitToCircle(player->r, player->GetPos()))
         {
             (*enemyItr)->isActive = false;
-            player->TakeAttack();
+            GameManager::Instance()->playerHP--;
+            GameManager::Instance()->enemyCount--;
+            TextManager::Instance()->InfoUpdate();
         }
         
         ++enemyItr;
@@ -159,7 +160,7 @@ void EnemyManager::CheckHitEnemiesToBullets(std::vector<Bullet*>* bullets)
     {
         for (auto bulletItr = bullets->begin(); bulletItr != bullets->end();)
         {
-            if ((*enemyItr)->CheckHitRectToCircle((*bulletItr)->r, (*bulletItr)->GetPos()))
+            if ((*enemyItr)->CheckHitToCircle((*bulletItr)->r, (*bulletItr)->GetPos()))
             {
                 (*enemyItr)->TakeDamage(GameManager::Instance()->playerAttackPower);
                 (*bulletItr)->isActive = false;
