@@ -28,7 +28,7 @@ public:
         background = new Background(targetRenderer);
         overText = new Text(100, 100, "ゲームオーバー", 40, targetRenderer);
         scoreText = new Text(100, 300, "獲得したスコア ", 30, targetRenderer);
-        toTitleText = new Text(100, 350, "Returnキーでタイトルへ", 30, targetRenderer);
+        toTitleText = new Text(100, 350, "Returnキーでタイトルへ", 30, targetRenderer, {100, 100, 100, 255});
     }
     
     void Redraw();
