@@ -1,7 +1,6 @@
 #ifndef TextManager_hpp
 #define TextManager_hpp
 
-#include <stdio.h>
 #include "SDL2/SDL.h"
 #include "Text.hpp"
 #include "string"
@@ -12,13 +11,13 @@ class TextManager
 {
 private:
     static TextManager* instance;          // Singleton化のため、一度生成したインスタンスを保存する変数。
-
     
 public:
-    SDL_Renderer* inGameRenderer;
-    Text* scoreText;
-    Text* enemyCountText;
-    Text* lifeText;
+    SDL_Renderer* inGameRenderer;           // 表示するレンダラー。
+    
+    Text* scoreText;            // スコア表示のテキスト。
+    Text* enemyCountText;           // 残り敵数を表示するテキスト。
+    Text* lifeText;         // 残りライフを表示するテキスト。
     
     void Init();
     void Redraw();

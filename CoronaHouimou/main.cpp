@@ -12,6 +12,7 @@ SDL_Window* window = NULL;
 SDL_Renderer* mainRenderer = NULL;
 
 
+// 描画するものを変えるための列挙
 enum WindowState
 {
     TitleWindow,
@@ -51,33 +52,28 @@ int main(int argc, const char * argv[])
     if (!Init())
         return -1;
 
-    // 各画面のオブジェクトを生成する。
+    // 各画面を描くオブジェクトを生成する。
     Title* title = new Title(mainRenderer);
     Tutorial* tutorial = new Tutorial(mainRenderer);
     Result* result = new Result(mainRenderer);
-
     
-    // ゲームマネージャーを生成する。
+    // 各マネージャーの生成と、レンダラーを設定する。
     GameManager::Instance()->inGameRenderer = mainRenderer;
-    GameManager::Instance()->GameStart();
-    
-    // 弾のマネージャーにレンダラーを設定する。
     BulletManager::Instance()->inGameRenderer = mainRenderer;
-    
     EnemyManager::Instance()->inGameRenderer = mainRenderer;
-    EnemyManager::Instance()->CreateSpawners();
-    
     TextManager::Instance()->inGameRenderer = mainRenderer;
+    
+    // 各マネージャーが使うオブジェクトの生成を行う。
+    GameManager::Instance()->Init();
     TextManager::Instance()->Init();
     
-    // フレームレートを調整する為の変数を生成する。
+    // フレームレートを調整する為の変数。
     int prevFrameEndTime = 0, nowFrameStartTime;
 
-    // メインループで使う変数を生成する。
+    // メインループで使う変数。
     SDL_Event e;
     bool quit = false;
     WindowState windowState = TitleWindow;
-    
     
     // メインループを行う。
     while (!quit)
@@ -101,7 +97,7 @@ int main(int argc, const char * argv[])
                     break;
             }
             
-            // キー入力状態を管理するマネージャーに渡す。
+            // イベントをキー入力状態を管理するマネージャーに渡す。
             KeyManager::Instance()->KeyCheck(e);
         }
         
@@ -129,14 +125,14 @@ int main(int argc, const char * argv[])
                 
             // ゲーム中
             case InGame:
-                // gameManager側で各オブジェクトが毎フレーム行う処理をさせる。
+                // GameManager側で各オブジェクトが毎フレーム行う処理をさせる。
                 GameManager::Instance()->Update();
                 
-                // レンダラーを一度クリアしてから描画し、その後に反映させる。
                 SDL_RenderClear(mainRenderer);
                 GameManager::Instance()->Redraw();
                 SDL_RenderPresent(mainRenderer);
                 
+                // プレイヤーのライフが0になったとき、リザルト画面に進む。
                 if (GameManager::Instance()->playerHP <= 0)
                 {
                     result->InfoUpdate();
@@ -149,6 +145,7 @@ int main(int argc, const char * argv[])
             case ResultWindow:
                 result->Redraw();
                 
+                // タイトル画面に戻る時、各マネージャーの変数をリセットする。
                 if (KeyManager::Instance()->enter)
                 {
                     windowState = TitleWindow;

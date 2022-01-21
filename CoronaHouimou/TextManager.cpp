@@ -4,6 +4,7 @@
 TextManager* TextManager::instance = nullptr;
 
 
+// 初期化処理をまとめた関数。
 void TextManager::Init()
 {
     scoreText = new Text(50, 50, "スコア 0", 20, inGameRenderer);
@@ -12,6 +13,7 @@ void TextManager::Init()
 }
 
 
+// 描画を行う関数。
 void TextManager::Redraw()
 {
     scoreText->Redraw();
@@ -20,6 +22,7 @@ void TextManager::Redraw()
 }
 
 
+// テキストを更新する関数。
 void TextManager::InfoUpdate()
 {
     std::string s = to_string(GameManager::Instance()->score);

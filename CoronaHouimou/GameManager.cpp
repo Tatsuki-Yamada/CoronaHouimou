@@ -6,7 +6,7 @@ GameManager* GameManager::instance = nullptr;
 
 
 // ゲームに必要なオブジェクトを一通りまとめて生成する関数。
-void GameManager::GameStart()
+void GameManager::Init()
 {
     player = new Player(0, 0, inGameRenderer);
     background = new Background(inGameRenderer);
@@ -21,13 +21,10 @@ void GameManager::GameStart()
 // 各オブジェクトが毎フレーム行う処理をまとめた関数。
 void GameManager::Update()
 {
-    //cout << inGamePos.x << ", " << inGamePos.y << endl;           // inGamePosを確認したいときにコメント解除する。
-
-    
     // 照準をマウスカーソルに追従させる。
     aim->ChaseMouse();
         
-    // 敵が全滅していなければ
+    // 戦闘中
     if (isAttacking)
     {
         // 敵をスポーンさせる
@@ -36,7 +33,7 @@ void GameManager::Update()
         // 敵をプレイヤーに近づけさせる。
         EnemyManager::Instance()->MoveEnemies(player->GetPos());
 
-        // 敵の当たり判定を判定させる。
+        // 敵の衝突判定をさせる。
         EnemyManager::Instance()->CheckHitEnemiesToPlayer(player);
         EnemyManager::Instance()->CheckHitEnemiesToBullets(&(BulletManager::Instance()->bullets));
         
@@ -58,6 +55,7 @@ void GameManager::Update()
         
         /// キー入力の状態を見て、それに応じた処理を行う。
         /// 現時点で行っている処理->
+        ///     斜め移動を検知する。
         ///         現時点でのゲーム内座標を一時保存する。
         ///         ゲーム内座標を移動させる。
         ///         if (ゲーム内座標が制限を超えたら)
@@ -140,11 +138,14 @@ void GameManager::Update()
                 BulletManager::Instance()->UpBullets(playerMoveSpeed, divR2);
             }
         }
+        
+        // スペースキーで弾の発射
         if (KeyManager::Instance()->space)
         {
             BulletManager::Instance()->CreateBullet(player->GetPos(), aim->GetPos());
         }
     }
+    // 変異の選択中
     else
     {
         if (KeyManager::Instance()->leftClick)
@@ -174,9 +175,7 @@ void GameManager::Update()
 void GameManager::Redraw()
 {
     background->Redraw();
-    EnemyManager::Instance()->RedrawSpawners();
     player->Redraw();
-
     
     if (isAttacking)
     {
@@ -191,12 +190,11 @@ void GameManager::Redraw()
     }
     
     aim->Redraw();
-    
     TextManager::Instance()->Redraw();
-
 }
 
 
+// スコアを加算する関数。
 void GameManager::AddScore(int s)
 {
     score += s * playerAttackPower;
@@ -204,6 +202,7 @@ void GameManager::AddScore(int s)
 }
 
 
+// ウェーブを始めるときのリセットと難易度上昇を行う関数。
 void GameManager::WaveStart()
 {
     EnemyManager::Instance()->WaveStart();
@@ -215,6 +214,7 @@ void GameManager::WaveStart()
 }
 
 
+// リトライしたときに各変数をリセットする関数。
 void GameManager::Reset()
 {
     playerMoveSpeed = 3;

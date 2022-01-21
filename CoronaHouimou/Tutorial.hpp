@@ -9,31 +9,19 @@
 #include "string"
 
 
-
 class Tutorial
 {
 private:
-    Text* tutorialText;
-    Text* firstText;
-    Text* secondText;
-    Text* thirdText;
-    Text* toStartText;
-    
-    SDL_Renderer* renderer;
+    SDL_Renderer* renderer;         // 描画するレンダラー。
+
+    Text* tutorialText;         // ゲーム説明 のテキスト。
+    Text* firstText;            // 1行目のテキスト。
+    Text* secondText;           // 2行目のテキスト。
+    Text* thirdText;            // 3行目のテキスト
+    Text* toStartText;          // Spaceで開始 のテキスト。
     
 public:
-    Tutorial(SDL_Renderer* targetRenderer)
-    {
-        renderer = targetRenderer;
-        
-        tutorialText = new Text(30, 100, "ゲーム説明", 30, targetRenderer, {255, 255, 255, 255});
-        firstText = new Text(30, 200, "・マウスで狙い、Spaceキー長押しで弾を連射、薬を倒せ！", 20, targetRenderer, {255, 255, 255, 255});
-        secondText = new Text(30, 250, "・WASDで移動し、薬から逃げろ！", 20, targetRenderer, {255, 255, 255, 255});
-        thirdText = new Text(30, 300, "・薬を全滅させると変異ができる。マウスクリックで1つ選択だ！", 20, targetRenderer, {255, 255, 255, 255});
-        toStartText = new Text(30, 400, "Spaceキーでゲーム開始", 30, targetRenderer, {155, 155, 155, 255});
-
-    }
-    
+    Tutorial(SDL_Renderer* targetRenderer);
     void Redraw();
 };
 #endif /* Tutorial_hpp */

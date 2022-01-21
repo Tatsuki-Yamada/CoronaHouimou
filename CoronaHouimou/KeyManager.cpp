@@ -9,7 +9,7 @@ void KeyManager::KeyCheck(SDL_Event e)
 {
     switch (e.type)
     {
-        // キーを押した状態にするエリア
+        // キーを押した状態にする
         case SDL_KEYDOWN:
             switch (e.key.keysym.sym)
             {
@@ -38,7 +38,7 @@ void KeyManager::KeyCheck(SDL_Event e)
             }
             break;
             
-        // キーを離した状態にするエリア
+        // キーを離した状態にする
         case SDL_KEYUP:
             switch (e.key.keysym.sym)
             {
@@ -67,17 +67,16 @@ void KeyManager::KeyCheck(SDL_Event e)
             }
             break;
 
-        // マウスボタンを押した状態にするエリア
+        // マウスボタンを押した状態にする
         case SDL_MOUSEBUTTONDOWN:
             if (e.button.button == SDL_BUTTON_LEFT)
                 leftClick = true;
             break;
             
-        // マウスボタンを離した状態にするエリア
+        // マウスボタンを離した状態にする
         case SDL_MOUSEBUTTONUP:
             if (e.button.button == SDL_BUTTON_LEFT)
                 leftClick = false;
             break;
-        
     }
 }

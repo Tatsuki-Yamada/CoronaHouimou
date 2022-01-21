@@ -11,7 +11,6 @@
 		271FED2D2796C94A001BA880 /* TextManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271FED2B2796C949001BA880 /* TextManager.cpp */; };
 		2725993A276CB9790008E5D2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27259939276CB9780008E5D2 /* main.cpp */; };
 		27259942276CBB400008E5D2 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27259941276CBB400008E5D2 /* libSDL2-2.0.0.dylib */; };
-		27259944276CBD150008E5D2 /* libSDL2_image-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27259943276CBD150008E5D2 /* libSDL2_image-2.0.0.dylib */; };
 		27259947277061A30008E5D2 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27259945277061A20008E5D2 /* Sprite.cpp */; };
 		2725994A277069DB0008E5D2 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27259948277069DB0008E5D2 /* Player.cpp */; };
 		2725994D27706ACD0008E5D2 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2725994B27706ACD0008E5D2 /* Enemy.cpp */; };
@@ -91,7 +90,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2726A5D42790AD24008092C1 /* libSDL2_ttf-2.0.0.dylib in Frameworks */,
-				27259944276CBD150008E5D2 /* libSDL2_image-2.0.0.dylib in Frameworks */,
 				27259942276CBB400008E5D2 /* libSDL2-2.0.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

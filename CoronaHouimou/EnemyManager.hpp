@@ -12,10 +12,10 @@ class EnemyManager
 private:
     static EnemyManager* instance;          // Singleton化のため、一度生成したインスタンスを保存する変数。
     
-    int lastSpawnTime = 0;
-    int spawnInterval = 2000;
-    int spawnCount = 0;
-    int basePos = 1000;
+    int lastSpawnTime = 0;          // 最後に敵が湧いた時間が入る変数。
+    int spawnInterval = 2000;           // 敵が湧く間隔の変数。ミリ秒単位。
+    int spawnCount = 0;         // このウェーブ中に何体の敵が湧いたかの変数。
+    int basePos = 1000;         // 下のspawnPointを変更しやすくするためだけの変数。
     Vector2 spawnPoint[8] = {
         {-basePos, -basePos},
         {-0, -basePos},
@@ -25,14 +25,13 @@ private:
         {-basePos, basePos},
         {0, basePos},
         {basePos, basePos},
-    };
+    };          // 敵が湧く座標の変数。
     
 public:
     SDL_Renderer* inGameRenderer = nullptr;
     
-    std::vector<Enemy_Cupsule_Orange*> enemies;
-    int spawnLimit = 10;
-
+    std::vector<Enemy_Cupsule_Orange*> enemies;         // 生成した敵を管理する変数。
+    int spawnLimit = 10;            // 1ウェーブで計何体湧くかを示す変数。
     
     void MoveEnemies(Vector2 playerPos);
     void SpawnEnemy();
@@ -45,8 +44,6 @@ public:
     void CheckHitEnemiesToBullets(std::vector<Bullet*>* bullets);
     bool CheckWaveComplete();
     void WaveStart();
-    void RedrawSpawners();
-    void CreateSpawners();
     void Reset();
     
     

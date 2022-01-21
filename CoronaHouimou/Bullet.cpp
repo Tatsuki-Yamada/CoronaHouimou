@@ -6,12 +6,9 @@
 Bullet::Bullet(Vector2 startPos, Vector2 targetPos, SDL_Renderer* targetRenderer) : Sprite(startPos.x, startPos.y, "PlayerBullet", targetRenderer)
 {
     reducRatio = 0.1;
-    
-    double rad = atan2(targetPos.y - startPos.y, targetPos.x - startPos.x);
-    moveVec.x = cos(rad) * moveSpeed * 10;          // あまりにも遅いと型の問題で速度が0になるため、10倍した値を基準にしている。
-    moveVec.y = sin(rad) * moveSpeed * 10;
-    
     r = GetReducSize().x / 2;
+
+    Init(startPos, targetPos);
 }
 
 
@@ -23,7 +20,6 @@ void Bullet::Init(Vector2 startPos, Vector2 targetPos)
     double rad = atan2(targetPos.y - startPos.y, targetPos.x - startPos.x);
     moveVec.x = cos(rad) * moveSpeed * 10;          // あまりにも遅いと型の問題で速度が0になるため、10倍した値を基準にしている。
     moveVec.y = sin(rad) * moveSpeed * 10;
-    
     
     isActive = true;
 }
@@ -48,7 +44,6 @@ void Bullet::Move()
         {
             isActive = false;
         }
-        
     }
     else
     {

@@ -6,7 +6,7 @@ Sprite::Sprite(int x, int y, string imageName, SDL_Renderer* targetRenderer)
 {
     renderer = targetRenderer;
     
-    // 画像ファイを読み込む
+    // 画像ファイルを読み込む
     string path = "Images/" + imageName + ".bmp";
     SDL_Surface* image = SDL_LoadBMP(path.c_str());
     
@@ -24,6 +24,7 @@ Sprite::Sprite(int x, int y, string imageName, SDL_Renderer* targetRenderer)
 }
 
 
+// デストラクタ。
 Sprite::~Sprite()
 {
     SDL_DestroyTexture(texture);
@@ -73,12 +74,15 @@ void Sprite::Redraw()
     }
 }
 
+
+// 座標を即座に移動させる関数。
 void Sprite::Teleport(int x, int y)
 {
     px = x; py = y;
 }
 
 
+// 上下左右に移動する関数。
 void Sprite::Right(int d, bool divR2)
 {
     // 斜め移動のときは移動量にルート2を割る。
@@ -89,16 +93,13 @@ void Sprite::Right(int d, bool divR2)
     }
     px += d;
 }
-
 void Sprite::Left(int d, bool divR2)
 {
     Right(-d, divR2);
 }
-
 void Sprite::Up(int d, bool divR2)
 {
     // yのプラス方向は下なので-の値を足している。
-    
     // 斜め移動のときは移動量にルート2を割る。
     if (divR2)
     {
@@ -107,7 +108,6 @@ void Sprite::Up(int d, bool divR2)
     }
     py -= d;
 }
-
 void Sprite::Down(int d, bool divR2)
 {
     Up(-d, divR2);

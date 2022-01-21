@@ -2,10 +2,10 @@
 #include "GameManager.hpp"
 
 
-
 EnemyManager* EnemyManager::instance = nullptr;
 
 
+// 敵を生成する関数。
 void EnemyManager::SpawnEnemy()
 {
     if (spawnCount < spawnLimit)
@@ -13,13 +13,14 @@ void EnemyManager::SpawnEnemy()
         // 今フレームの時間を取得し、最後に敵を出したフレームからインターバル秒以上の間隔があれば敵を生成する。
         if (SDL_GetTicks() - lastSpawnTime > spawnInterval)
         {
+            // 敵を沸かせる位置を8つからランダムに選択する。
             Vector2 inGamePos = GameManager::Instance()->inGamePos;
             int randIndex = rand() % 8;
             Vector2 spawnPos = spawnPoint[randIndex];
             spawnPos.x += -inGamePos.x + 320;
             spawnPos.y += -inGamePos.y + 240;
             
-            // 配列内に無効状態の敵があればそれを再度有効化して終わる。
+            // 配列内に無効状態の敵があればそれを使い回す。
             for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
             {
                 if (!(*enemyItr)->isActive)
@@ -42,6 +43,7 @@ void EnemyManager::SpawnEnemy()
 }
 
 
+// 全EnemyのMoveTo()を呼び出す関数。
 void EnemyManager::MoveEnemies(Vector2 playerPos)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
@@ -53,6 +55,7 @@ void EnemyManager::MoveEnemies(Vector2 playerPos)
 }
 
 
+// 全EnemyのRedraw()を呼び出す関数。
 void EnemyManager::RedrawEnemies()
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
@@ -64,6 +67,7 @@ void EnemyManager::RedrawEnemies()
 }
 
 
+// 全EnemyのRight, Left, Up, Down()を呼び出す関数。
 void EnemyManager::RightEnemies(int d, bool divR2)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
@@ -72,16 +76,7 @@ void EnemyManager::RightEnemies(int d, bool divR2)
         
         ++enemyItr;
     }
-    
-    /*
-    for (Spawner* s : spawners)
-    {
-        s->Right(d, divR2);
-    }
-     */
 }
-
-
 void EnemyManager::LeftEnemies(int d, bool divR2)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
@@ -90,16 +85,7 @@ void EnemyManager::LeftEnemies(int d, bool divR2)
         
         ++enemyItr;
     }
-    
-    /*
-    for (Spawner* s : spawners)
-    {
-        s->Left(d, divR2);
-    }
-     */
 }
-
-
 void EnemyManager::UpEnemies(int d, bool divR2)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
@@ -108,16 +94,7 @@ void EnemyManager::UpEnemies(int d, bool divR2)
         
         ++enemyItr;
     }
-    
-    /*
-    for (Spawner* s : spawners)
-    {
-        s->Up(d, divR2);
-    }
-     */
 }
-
-
 void EnemyManager::DownEnemies(int d, bool divR2)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
@@ -126,23 +103,17 @@ void EnemyManager::DownEnemies(int d, bool divR2)
         
         ++enemyItr;
     }
-    
-    /*
-    for (Spawner* s : spawners)
-    {
-        s->Down(d, divR2);
-    }
-     */
 }
 
 
+// 全EnemyにPlayerとの衝突判定をさせる関数。
 void EnemyManager::CheckHitEnemiesToPlayer(Player* player)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
     {
-        // 敵がプレイヤーと当たったとき、敵をテレポートさせる。
         if ((*enemyItr)->CheckHitToCircle(player->r, player->GetPos()))
         {
+            // 敵がプレイヤーと当たったときの処理。
             (*enemyItr)->isActive = false;
             GameManager::Instance()->playerHP--;
             GameManager::Instance()->enemyCount--;
@@ -154,6 +125,7 @@ void EnemyManager::CheckHitEnemiesToPlayer(Player* player)
 }
 
 
+// 全Enemyに全Bulletとの衝突判定をさせる関数。
 void EnemyManager::CheckHitEnemiesToBullets(std::vector<Bullet*>* bullets)
 {
     for (auto enemyItr = enemies.begin(); enemyItr != enemies.end();)
@@ -162,6 +134,7 @@ void EnemyManager::CheckHitEnemiesToBullets(std::vector<Bullet*>* bullets)
         {
             if ((*enemyItr)->CheckHitToCircle((*bulletItr)->r, (*bulletItr)->GetPos()))
             {
+                // 敵が弾に当たったときの処理。
                 (*enemyItr)->TakeDamage(GameManager::Instance()->playerAttackPower);
                 (*bulletItr)->isActive = false;
                 GameManager::Instance()->AddScore(100);
@@ -174,6 +147,7 @@ void EnemyManager::CheckHitEnemiesToBullets(std::vector<Bullet*>* bullets)
 }
 
 
+// ウェーブが全滅したかチェックして返す関数。
 bool EnemyManager::CheckWaveComplete()
 {
     if (spawnCount >= spawnLimit)
@@ -196,7 +170,7 @@ bool EnemyManager::CheckWaveComplete()
 }
 
 
-
+// ウェーブを始めるときのリセットと難易度上昇を行う関数。
 void EnemyManager::WaveStart()
 {
     spawnCount = 0;
@@ -206,29 +180,7 @@ void EnemyManager::WaveStart()
 }
 
 
-void EnemyManager::RedrawSpawners()
-{
-    /*
-    for (Spawner* s : spawners)
-    {
-        (s)->Redraw();
-    }
-     */
-}
-
-
-void EnemyManager::CreateSpawners()
-{
-    /*
-    for (int i = 0; i < 8; i++)
-    {
-        Spawner* s = new Spawner(Vector2{spawnPoint[i].x + 320, spawnPoint[i].y + 240}, inGameRenderer);
-        spawners[i] = s;
-    }
-     */
-}
-
-
+// リトライしたときに各変数をリセットする関数。
 void EnemyManager::Reset()
 {
     spawnInterval = 2000;

@@ -1,7 +1,6 @@
 #ifndef Text_hpp
 #define Text_hpp
 
-#include <stdio.h>
 #include "SDL2/SDL.h"
 #include <SDL2/SDL_ttf.h>
 #include "iostream"
@@ -11,32 +10,18 @@
 class Text
 {
 private:
-    TTF_Font* font;
-    SDL_Surface *surface;
-    SDL_Texture *texture;
-    int posX, posY;
-    SDL_Color fontColor;
-    
-    SDL_Renderer* renderer;
+    SDL_Renderer* renderer;         // 描画するレンダラー。
+
+    TTF_Font* font;         // 読み込むフォント。
+    SDL_Surface *surface;           // 表示の過程で必要になる変数。
+    SDL_Texture *texture;           // 表示の過程で必要になる変数。
+    int px, py;         // 表示する座標。
+    SDL_Color fontColor;            // 文字の色。
     
 public:
-    std::string strings;
+    std::string strings;            // 表示する文字列。
 
-    Text(int x, int y, std::string str, int fontSize, SDL_Renderer* targetRenderer, SDL_Color color={0, 0, 0, 255})
-    {
-        posX = x;
-        posY = y;
-        strings = str;
-        font = TTF_OpenFont("Fonts/komorebi-gothic.ttf", fontSize);
-        fontColor = color;
-
-        if (font == nullptr)
-        {
-            std::cout << "font error" << std::endl;
-        }
-        renderer = targetRenderer;
-    }
-    
+    Text(int x, int y, std::string str, int fontSize, SDL_Renderer* targetRenderer, SDL_Color color={0, 0, 0, 255});
     void Redraw();
 };
 

@@ -10,7 +10,7 @@ void BulletManager::CreateBullet(Vector2 startPos, Vector2 targetPos)
     // 今フレームの時間を取得し、最後に弾を撃ったフレームからインターバル秒以上の間隔があれば弾を撃つ。
     if (SDL_GetTicks() - lastShotTime > shotInterval)
     {
-        // 配列内に無効状態の弾があればそれを再度有効化して終わる。
+        // 配列内に無効状態の弾があればそれを使い回す。
         for (auto bulletItr = bullets.begin(); bulletItr != bullets.end();)
         {
             if (!(*bulletItr)->isActive)
@@ -28,6 +28,7 @@ void BulletManager::CreateBullet(Vector2 startPos, Vector2 targetPos)
 }
 
 
+// 全BulletのRedraw()を呼ぶ関数。
 void BulletManager::RedrawBullets()
 {
     for (auto bulletItr = bullets.begin(); bulletItr != bullets.end();)
@@ -39,6 +40,7 @@ void BulletManager::RedrawBullets()
 }
 
 
+// 全BulletのMove()を呼ぶ関数。
 void BulletManager::MoveBullets()
 {
     for (auto bulletItr = bullets.begin(); bulletItr != bullets.end();)
@@ -50,6 +52,7 @@ void BulletManager::MoveBullets()
 }
 
 
+// 全BulletのRight, Left, Up, Down()を呼ぶ関数。
 void BulletManager::RightBullets(int d, bool divR2)
 {
     for (auto bulletItr = bullets.begin(); bulletItr != bullets.end();)
@@ -88,6 +91,7 @@ void BulletManager::DownBullets(int d, bool divR2)
 }
 
 
+// リトライしたときに各変数をリセットする関数。
 void BulletManager::Reset()
 {
     shotInterval = 500;

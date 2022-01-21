@@ -1,6 +1,16 @@
 #include "Button.hpp"
 
 
+//コンストラクタ。
+Button::Button(Vector2 pos, const char* buttonType, const char* str, SDL_Renderer* targetRenderer) : Sprite(pos.x, pos.y, buttonType, targetRenderer)
+{
+    renderer = targetRenderer;
+    text = new Text(pos.x - w / 4, pos.y, str, 20, targetRenderer, {255, 255, 255, 255});
+    isActive = false;
+}
+
+
+// クリックされた座標がボタンの上にあるか判定する関数。
 bool Button::CheckClick()
 {
     if (isActive)
@@ -21,6 +31,7 @@ bool Button::CheckClick()
 }
 
 
+// 描画する関数。
 void Button::Redraw()
 {
     if (isActive)

@@ -9,28 +9,19 @@
 #include "string"
 
 
-
 class Result
 {
 private:
-    Background* background;
-    Text* overText;
-    Text* scoreText;
-    Text* toTitleText;
+    SDL_Renderer* renderer;         // 描画するレンダラー。
+
+    Background* background;         // 背景画像のオブジェクト。
+    Text* overText;         // ゲームオーバーのテキスト。
+    Text* scoreText;            // スコアのテキスト。
+    Text* toTitleText;          // タイトルへ のテキスト。
     
-    SDL_Renderer* renderer;
     
 public:
-    Result(SDL_Renderer* targetRenderer)
-    {
-        renderer = targetRenderer;
-        
-        background = new Background(targetRenderer);
-        overText = new Text(100, 100, "ゲームオーバー", 40, targetRenderer);
-        scoreText = new Text(100, 300, "獲得したスコア ", 30, targetRenderer);
-        toTitleText = new Text(100, 350, "Returnキーでタイトルへ", 30, targetRenderer, {100, 100, 100, 255});
-    }
-    
+    Result(SDL_Renderer* targetRenderer);
     void Redraw();
     void InfoUpdate();
 };

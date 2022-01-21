@@ -9,7 +9,7 @@ Background::Background(SDL_Renderer* targetRenderer) : Sprite(320, 240, "Backgro
 }
 
 
-//
+// 描画を行う関数。同じ画像を複数枚繋げる処理が追加されている。
 void Background::Redraw()
 {
     Vector2 reducSize = GetReducSize();

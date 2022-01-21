@@ -1,17 +1,11 @@
 #ifndef BulletManager_hpp
 #define BulletManager_hpp
 
-#include <stdio.h>
 #include <vector>
 #include "Bullet.hpp"
 #include "GameManager.hpp"
 
 
-/// <summary>
-/// キー入力状態をそれぞれのフラグで管理しているクラス。
-/// Singleton化しているため、必ずInstance()関数を呼び出した上で使用する。
-/// 使用例；BulletManager::Instance()->RedrawBullets();
-/// </summary>
 class BulletManager
 {
 private:
@@ -22,10 +16,9 @@ private:
 public:
     SDL_Renderer* inGameRenderer = nullptr;
     
-    std::vector<Bullet*> bullets;
+    std::vector<Bullet*> bullets;           // 生成した弾を管理する変数。
     int shotInterval = 500;           // 連射のインターバルを設定する変数。ミリ秒単位。
 
-    
     void CreateBullet(Vector2 startPos, Vector2 targetPos);
     void RedrawBullets();
     void MoveBullets();
